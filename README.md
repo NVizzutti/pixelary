@@ -36,7 +36,7 @@ This project will be primarily implemented using Vanilla JavaScript and HTML5 Ca
 
 **Day 3**- Make input field active if not already, and make string comparison to image content. Build the rest of the dashboard and create game timer. Make sure the game has all the controls to start and stop intuitively, and that the game ends when the rebuilding process is done, or the parsed input is correct.
 
-**Day 4**- Work on CSS and make sure it looks clean. Add to the settings to allow users to adjust how the image is manipulated. Have some cool options that look pretty. Make sure production Readme is done and engaging.
+**Day 4**- Work on CSS and make sure it looks clean, and the animation is clean. Add to the settings to allow users to adjust how the image is manipulated. Have some cool options that look pretty. Make sure production Readme is done and engaging.
 
 
 ### Bonuses
