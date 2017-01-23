@@ -41,5 +41,10 @@ This project will be primarily implemented using Vanilla JavaScript and HTML5 Ca
 
 ### Bonuses
 
+  If the MVPs are completed earlier than expected, there are a few ways to improve the project: 
+
 - [ ] Have mixed images, where users guess two words instead of one.
 - [ ] Give the images some effects from easel.js, such as perspective, blur, etc.
+
+####Note To a/A:
+I'm was having a hard time gauging the difficulty of these projects because most of the ideas work with libraries I haven't spent much time with. Please let me know if I am off-base, as I do not want to do something overly simple. I will remove this from README.
