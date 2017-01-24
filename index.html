@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src='./bundle.js' ></script>
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body onload="init()">
-  <canvas id="canvas" width="800" height="500"></canvas>
-  <script src='./script.js' ></script>
+  <body>
+  <canvas id="img-canvas" width="800" height="500"></canvas>
+  <h2 id='clock'>1:00</h2>
+  <input type='text' placeholder='Make Guess' id='guess'></input>
 </body>
 </html>

@@ -1,0 +1,28 @@
+{
+  "name": "JSProject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NVizzutti/pixelary.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NVizzutti/pixelary/issues"
+  },
+  "homepage": "https://github.com/NVizzutti/pixelary#readme",
+  "dependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0"
+  }
+}
