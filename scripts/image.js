@@ -1,9 +1,28 @@
-let image = new Image();
-image.src = 'images/dog.jpg';
-image.onload = function() {
-  start(image);
-};
+import {tickClock} from './timer.js';
+export let running = false;
+let image;
+let imageFile;
+let selectedImage;
+let answerString;
+selectImage();
+
+function selectImage() {
+   image = new Image();
+   imageFile = ['dog.jpg', 'vader.png'];
+   selectedImage = imageFile[Math.floor(Math.random() * imageFile.length)];
+   answerString = selectedImage.split('.')[0];
+   image.src = `images/${selectedImage}`;
+}
+
+$(document).keypress(() => {
+    if (!running) {
+      start(image);
+      tickClock();
+    }
+});
+
 function start(img) {
+  running = true;
   //Hidden Image Target Data
   let hiddenCanvas = document.createElement('canvas');
   let hiddenCtx = hiddenCanvas.getContext('2d');
@@ -39,7 +58,19 @@ function start(img) {
       }
     }
     ctx.putImageData(imageData, 0, 0);
+    let timeLeft = ($('#clock').text()).replace(':', '');
+    if ((parseInt(timeLeft) > 0) && running) {
+      setTimeout(changeImage, 100);
+    }
   };
-  let timer = setInterval(changeImage, 10);
-  // setTimeout(() => (clearInterval(timer)), 500000);
+  changeImage();
 }
+
+export const checkGuess = function(guess) {
+  console.log(guess, answerString);
+  console.log(guess.includes(answerString));
+  if (guess.includes(answerString)) {
+    running = false;
+    selectImage();
+  }
+};

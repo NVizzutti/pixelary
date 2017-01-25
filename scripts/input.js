@@ -1,19 +1,10 @@
-
+import {checkGuess} from './image';
 $(document).ready(() => {
-
-  $(document).keypress((e) => {
-    handleKeyPress(e.keyCode);
-  });
 
   $('#guess').change(() => {
     let value = $('#guess').val();
-    console.log(value);
+    checkGuess(value);
+    $('#guess').val('');
   });
 
-  function handleKeyPress(code) {
-    if (code === 13) {
-
-    }
-  }
-  
 });

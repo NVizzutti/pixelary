@@ -44,49 +44,79 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
 	__webpack_require__(1);
 	__webpack_require__(2);
 	__webpack_require__(3);
 
-
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	let image = new Image();
-	image.src = 'images/dog.jpg';
-	image.onload = function() {
-	  start(image);
-	};
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.checkGuess = exports.running = undefined;
+	
+	var _timer = __webpack_require__(3);
+	
+	var running = exports.running = false;
+	var image = void 0;
+	var imageFile = void 0;
+	var selectedImage = void 0;
+	var answerString = void 0;
+	selectImage();
+	
+	function selectImage() {
+	  image = new Image();
+	  imageFile = ['dog.jpg', 'vader.png'];
+	  selectedImage = imageFile[Math.floor(Math.random() * imageFile.length)];
+	  answerString = selectedImage.split('.')[0];
+	  image.src = 'images/' + selectedImage;
+	}
+	
+	$(document).keypress(function () {
+	  if (!running) {
+	    start(image);
+	    (0, _timer.tickClock)();
+	  }
+	});
+	
 	function start(img) {
+	  exports.running = running = true;
 	  //Hidden Image Target Data
-	  let hiddenCanvas = document.createElement('canvas');
-	  let hiddenCtx = hiddenCanvas.getContext('2d');
+	  var hiddenCanvas = document.createElement('canvas');
+	  var hiddenCtx = hiddenCanvas.getContext('2d');
 	  hiddenCanvas.height = img.height;
 	  hiddenCanvas.width = img.width;
 	  hiddenCtx.drawImage(img, 0, 0);
-	  let imageData = hiddenCtx.getImageData(0, 0, hiddenCanvas.width, hiddenCanvas.height);
+	  var imageData = hiddenCtx.getImageData(0, 0, hiddenCanvas.width, hiddenCanvas.height);
 	  //Image Canvas Starts Solid
-	  let canvas = document.getElementById('img-canvas');
-	  let ctx = canvas.getContext('2d');
+	  var canvas = document.getElementById('img-canvas');
+	  var ctx = canvas.getContext('2d');
 	  canvas.height = img.height;
 	  canvas.width = img.width;
-	  let currentData = imageData.data;
-	  let originalData = currentData.map(el => el);
+	  var currentData = imageData.data;
+	  var originalData = currentData.map(function (el) {
+	    return el;
+	  });
 	
-	  let resetImage = function() {
-	    for (var i = 0; i < currentData.length; i+=4) {
-	      currentData[i+0]=0;
-	      currentData[i+1]=0;
-	      currentData[i+2]=0;
-	      currentData[i+3]=255;
+	  var resetImage = function resetImage() {
+	    for (var i = 0; i < currentData.length; i += 4) {
+	      currentData[i + 0] = 0;
+	      currentData[i + 1] = 0;
+	      currentData[i + 2] = 0;
+	      currentData[i + 3] = 255;
 	    }
 	  };
 	
 	  resetImage();
 	
-	  let changeImage = function() {
-	    for (var i = 0; i < currentData.length; i ++) {
+	  var changeImage = function changeImage() {
+	    for (var i = 0; i < currentData.length; i++) {
 	      if (currentData[i] < originalData[i]) {
 	        currentData[i] += 1;
 	      } else if (currentData[i] > originalData[i]) {
@@ -94,52 +124,72 @@
 	      }
 	    }
 	    ctx.putImageData(imageData, 0, 0);
+	    var timeLeft = $('#clock').text().replace(':', '');
+	    if (parseInt(timeLeft) > 0 && running) {
+	      setTimeout(changeImage, 100);
+	    }
 	  };
-	  let timer = setInterval(changeImage, 10);
-	  // setTimeout(() => (clearInterval(timer)), 500000);
+	  changeImage();
 	}
-
+	
+	var checkGuess = exports.checkGuess = function checkGuess(guess) {
+	  console.log(guess, answerString);
+	  console.log(guess.includes(answerString));
+	  if (guess.includes(answerString)) {
+	    exports.running = running = false;
+	    selectImage();
+	  }
+	};
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
 	
-	$(document).ready(() => {
+	var _image = __webpack_require__(1);
 	
-	  $(document).keypress((e) => {
-	    handleKeyPress(e.keyCode);
+	$(document).ready(function () {
+	
+	  $('#guess').change(function () {
+	    var value = $('#guess').val();
+	    (0, _image.checkGuess)(value);
+	    $('#guess').val('');
 	  });
-	
-	  $('#guess').change(() => {
-	    let value = $('#guess').val();
-	    console.log(value);
-	  });
-	
-	  function handleKeyPress(code) {
-	    if (code === 13) {
-	
-	    }
-	  }
-	  
 	});
-
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	function tickClock() {
-	  let timeString = $('#clock').text();
-	  let minutes = timeString.split(':')[0];
-	  let seconds = timeString.split(':')[1];
-	  seconds -= 1;
-	}
+	'use strict';
 	
-	$(document).ready(() => {
-	  tickClock();
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
 	});
-
+	exports.tickClock = undefined;
+	
+	var _image = __webpack_require__(1);
+	
+	var tickClock = exports.tickClock = function tickClock() {
+	  var timeString = $('#clock').text();
+	  var minutes = parseInt(timeString.split(':')[0]);
+	  var seconds = parseInt(timeString.split(':')[1]);
+	  seconds -= 1;
+	  if (seconds < 0) {
+	    seconds = 59;
+	    minutes -= 1;
+	  }
+	  var minutesStr = minutes.toString();
+	  var secondsStr = seconds.toString();
+	  var newString = minutesStr + ':' + secondsStr;
+	  $('#clock').text(newString);
+	  if ((minutes > 0 || seconds > 0) && _image.running) {
+	    setTimeout(tickClock, 1000);
+	  } else if (minutes <= 0 && seconds <= 0) {
+	    alert('time up');
+	  }
+	};
 
 /***/ }
 /******/ ]);
