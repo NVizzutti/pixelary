@@ -46,28 +46,42 @@ export const thresholdEasy = function(current, original) {
 };
 
 export const randomPixels = function(current, original) {
-  for (var i = 0; i < (original.length / (original.length * 0.008)); i+=4) {
+  for (var i = 0; i < (original.length / (original.length * 0.002)); i+=4) {
     let randIdx = Math.floor(Math.random() * original.length);
     current[randIdx] = original[randIdx];
+    current[randIdx + 1] = original[randIdx + 1];
+    current[randIdx + 2] = original[randIdx + 2];
   }
 };
 
-export const divideRows = function(current, original) {
-  for (var i = 0; i < original.length / 4; i+= 4) {
-
+export const redRows = function(current, original) {
+  for (var i = 0; i < original.length; i+= 4) {
+    let grayScale = (0.4 * original[i]) + (0.6 * original[i + 1]) + (0.12 * original[i + 2]);
+    if ((i + 1) % 4 === 0) {
+      current[i] < grayScale ? current[i]+=1 : current[i]-= 1;
+      current[i+1] < grayScale ? current[i+1]+=1 : current[i+1]-= 1;
+      current[i+2] < grayScale ? current[i+2]+=1 : current[i+2]-= 1;
+    } else if (i % 4 === 1) {
+      current[i] < grayScale ? current[i]+= 1: current[i]-= 1;
+    }
+    current[i] = grayScale;
   }
 };
 
-// let idx = 0;
-// for (var i = 0; i < img.height; i++) {
-//   for (var j = 0; j < img.width; j++) {
-//     let offsetX = i - (img.width / 4);
-//     let offsetY = j - (img.height / 4);
-//     let offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
-//     let result = Math.sin(offset/8);
-//     currentData[idx] = result * 255;
-//     currentData[idx+= 1] = result * 255;
-//     currentData[idx+= 1] = result * 255;
-//     currentData[idx+= 1] = 255;
-//   }
-// }
+export const offsetPattern = function(current, original) {
+  let idx = 0;
+  for (var i = 0; i < 800; i++) {
+    for (var j = 0; j < 800; j++) {
+      let offsetX = i - 200;
+      let offsetY = j - 200;
+      let offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
+      let result = Math.sin(offset/8);
+      current[idx] += (current[idx] - (result * original[idx])) * 0.05;
+      current[idx+= 1] += (current[idx] - (result * original[idx + 1])) * 0.1;
+      current[idx+= 1] += (current[idx] - (result * original[idx + 2])) * 0.1;
+      current[idx+= 1] = 200;
+    }
+    current[i] = original[i];
+    current[j] = original[j];
+  }
+};

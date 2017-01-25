@@ -59,7 +59,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.checkGuess = exports.running = undefined;
+	exports.checkGuess = exports.answerString = exports.running = undefined;
 	
 	var _timer = __webpack_require__(2);
 	
@@ -73,16 +73,16 @@
 	
 	var running = exports.running = false;
 	var image = void 0;
-	var imageFile = void 0;
 	var selectedImage = void 0;
-	var answerString = void 0;
+	var imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg'];
+	var answerString = exports.answerString = void 0;
+	
 	selectImage();
 	
 	function selectImage() {
 	  image = new Image();
-	  imageFile = ['dog.jpg', 'vader.png'];
 	  selectedImage = imageFile[Math.floor(Math.random() * imageFile.length)];
-	  answerString = selectedImage.split('.')[0];
+	  exports.answerString = answerString = selectedImage.split('.')[0];
 	  image.src = 'images/' + selectedImage;
 	}
 	
@@ -126,6 +126,10 @@
 	      currentData[i + 1] = Math.floor(Math.random() * 100);
 	      currentData[i + 2] = Math.floor(Math.random() * 255);
 	      currentData[i + 3] = 255;
+	      // currentData[i] = 0;
+	      // currentData[i+1] = 0;
+	      // currentData[i+2] = 0;
+	      // currentData[i+3] = 255;
 	    }
 	  };
 	
@@ -141,12 +145,13 @@
 	      }, 100);
 	    }
 	  };
-	  changeImage(Filters.divideRows);
+	  changeImage(Filters.threshold);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
 	  console.log(guess, answerString);
 	  console.log(guess.includes(answerString));
+	  guess = guess.toLowerCase();
 	  if (guess.includes(answerString)) {
 	    exports.running = running = false;
 	    selectImage();
@@ -187,7 +192,7 @@
 	  if ((minutes > 0 || seconds > 0) && _image.running) {
 	    setTimeout(tickClock, 1000);
 	  } else if (minutes <= 0 && seconds <= 0) {
-	    alert('time up');
+	    $('#message').text('Answer was ' + _image.answerString);
 	  }
 	};
 	
@@ -251,29 +256,45 @@
 	};
 	
 	var randomPixels = exports.randomPixels = function randomPixels(current, original) {
-	  for (var i = 0; i < original.length / (original.length * 0.008); i += 4) {
+	  for (var i = 0; i < original.length / (original.length * 0.002); i += 4) {
 	    var randIdx = Math.floor(Math.random() * original.length);
 	    current[randIdx] = original[randIdx];
+	    current[randIdx + 1] = original[randIdx + 1];
+	    current[randIdx + 2] = original[randIdx + 2];
 	  }
 	};
 	
-	var divideRows = exports.divideRows = function divideRows(current, original) {
-	  for (var i = 0; i < original.length / 4; i += 4) {}
+	var redRows = exports.redRows = function redRows(current, original) {
+	  for (var i = 0; i < original.length; i += 4) {
+	    var grayScale = 0.4 * original[i] + 0.6 * original[i + 1] + 0.12 * original[i + 2];
+	    if ((i + 1) % 4 === 0) {
+	      current[i] < grayScale ? current[i] += 1 : current[i] -= 1;
+	      current[i + 1] < grayScale ? current[i + 1] += 1 : current[i + 1] -= 1;
+	      current[i + 2] < grayScale ? current[i + 2] += 1 : current[i + 2] -= 1;
+	    } else if (i % 4 === 1) {
+	      current[i] < grayScale ? current[i] += 1 : current[i] -= 1;
+	    }
+	    current[i] = grayScale;
+	  }
 	};
 	
-	// let idx = 0;
-	// for (var i = 0; i < img.height; i++) {
-	//   for (var j = 0; j < img.width; j++) {
-	//     let offsetX = i - (img.width / 4);
-	//     let offsetY = j - (img.height / 4);
-	//     let offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
-	//     let result = Math.sin(offset/8);
-	//     currentData[idx] = result * 255;
-	//     currentData[idx+= 1] = result * 255;
-	//     currentData[idx+= 1] = result * 255;
-	//     currentData[idx+= 1] = 255;
-	//   }
-	// }
+	var offsetPattern = exports.offsetPattern = function offsetPattern(current, original) {
+	  var idx = 0;
+	  for (var i = 0; i < 800; i++) {
+	    for (var j = 0; j < 800; j++) {
+	      var offsetX = i - 200;
+	      var offsetY = j - 200;
+	      var offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
+	      var result = Math.sin(offset / 8);
+	      current[idx] += (current[idx] - result * original[idx]) * 0.05;
+	      current[idx += 1] += (current[idx] - result * original[idx + 1]) * 0.1;
+	      current[idx += 1] += (current[idx] - result * original[idx + 2]) * 0.1;
+	      current[idx += 1] = 200;
+	    }
+	    current[i] = original[i];
+	    current[j] = original[j];
+	  }
+	};
 
 /***/ },
 /* 4 */

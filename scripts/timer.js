@@ -1,4 +1,4 @@
-import {running} from './image';
+import {running, answerString} from './image';
 let timeString;
 
 export const tickClock = function() {
@@ -17,7 +17,7 @@ export const tickClock = function() {
   if ((minutes > 0 || seconds > 0) && running) {
     setTimeout(tickClock, 1000);
   } else if (minutes <= 0 && seconds <= 0) {
-    alert('time up');
+    $('#message').text(`Answer was ${answerString}`);
   }
 };
 

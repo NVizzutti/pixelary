@@ -3,14 +3,15 @@ import * as Filters from './filters';
 import {clearMessage} from './input';
 export let running = false;
 let image;
-let imageFile;
 let selectedImage;
-let answerString;
+let imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg',
+'cat.jpeg','microphone.jpeg', 'grass.jpeg'];
+export let answerString;
+
 selectImage();
 
 function selectImage() {
    image = new Image();
-   imageFile = ['dog.jpg', 'vader.png'];
    selectedImage = imageFile[Math.floor(Math.random() * imageFile.length)];
    answerString = selectedImage.split('.')[0];
    image.src = `images/${selectedImage}`;
@@ -54,6 +55,11 @@ function start(img) {
       currentData[i+1] = Math.floor(Math.random() * 100);
       currentData[i+2] = Math.floor(Math.random() * 255);
       currentData[i+3] = 255;
+      // currentData[i] = 0;
+      // currentData[i+1] = 0;
+      // currentData[i+2] = 0;
+      // currentData[i+3] = 255;
+
     }
   };
 
@@ -67,12 +73,13 @@ function start(img) {
       setTimeout(() => changeImage(filter), 100);
     }
   };
-  changeImage(Filters.divideRows);
+  changeImage(Filters.threshold);
 }
 
 export const checkGuess = function(guess) {
   console.log(guess, answerString);
   console.log(guess.includes(answerString));
+  guess = guess.toLowerCase();
   if (guess.includes(answerString)) {
     running = false;
     selectImage();
