@@ -1,5 +1,5 @@
 export const fade = function(current, original) {
-  for (var i = 0; i < current.length; i ++) {
+  for (let i = 0; i < current.length; i ++) {
     if (current[i] < original[i]) {
       current[i] += 1;
     } else if (current[i] > original[i]) {
@@ -11,12 +11,12 @@ export const fade = function(current, original) {
 export const threshold = function(current, original) {
   let lastPixelBlack = true;
   let limit = Math.floor(Math.random() * 255);
-  for (var i = 0; i < original.length; i+=4) {
-    var red = original[i];
-    var green = original[i+1];
-    var blue = original[i+2];
+  for (let i = 0; i < original.length; i+=4) {
+    let red = original[i];
+    let green = original[i+1];
+    let blue = original[i+2];
     current[i + 3] = 255;
-    var extreme = (0.25 * red + 0.75 * green + 0.07 * blue > limit) ? 255 : 0;
+    let extreme = (0.25 * red + 0.75 * green + 0.07 * blue > limit) ? 255 : 0;
     if (extreme === 255 && !lastPixelBlack) {
       lastPixelBlack = true;
       current[i]++;
@@ -30,12 +30,12 @@ export const threshold = function(current, original) {
 };
 
 export const thresholdEasy = function(current, original) {
-  for (var i = 0; i < original.length; i+=4) {
+  for (let i = 0; i < original.length; i+=4) {
     let randIdx = Math.ceil((Math.random() * (original.length / 4)) * 4) + 1;
-    var red = original[randIdx];
-    var green = original[randIdx+1];
-    var blue = original[randIdx+2];
-    var extreme = (0.25 * red + 0.75 * green + 0.07 * blue > 200) ? 255 : 0;
+    let red = original[randIdx];
+    let green = original[randIdx+1];
+    let blue = original[randIdx+2];
+    let extreme = (0.25 * red + 0.75 * green + 0.07 * blue > 200) ? 255 : 0;
     if (extreme === 255) {
       current[randIdx]++;
       current[randIdx+1]++;
@@ -46,7 +46,7 @@ export const thresholdEasy = function(current, original) {
 };
 
 export const randomPixels = function(current, original) {
-  for (var i = 0; i < (original.length / (original.length * 0.002)); i+=4) {
+  for (let i = 0; i < (original.length / (original.length * 0.002)); i+=4) {
     let randIdx = Math.floor(Math.random() * original.length);
     current[randIdx] = original[randIdx];
     current[randIdx + 1] = original[randIdx + 1];
@@ -54,24 +54,22 @@ export const randomPixels = function(current, original) {
   }
 };
 
-export const redRows = function(current, original) {
-  for (var i = 0; i < original.length; i+= 4) {
-    let grayScale = (0.4 * original[i]) + (0.6 * original[i + 1]) + (0.12 * original[i + 2]);
-    if ((i + 1) % 4 === 0) {
-      current[i] < grayScale ? current[i]+=1 : current[i]-= 1;
-      current[i+1] < grayScale ? current[i+1]+=1 : current[i+1]-= 1;
-      current[i+2] < grayScale ? current[i+2]+=1 : current[i+2]-= 1;
-    } else if (i % 4 === 1) {
-      current[i] < grayScale ? current[i]+= 1: current[i]-= 1;
-    }
-    current[i] = grayScale;
+export const grayScale = function(current, original) {
+  for (let i = 0; i < original.length / (original.length * 0.001); i++) {
+    let randIdx = Math.floor(Math.random() * original.length);
+    let gray = (0.4 * original[randIdx]) +
+    (0.6 * original[randIdx + 1]) + (0.12 * original[randIdx + 2]);
+    current[randIdx] = gray;
+    // current[randIdx] < gray ? current[randIdx] += 1 : current[randIdx] -= 1;
+    // current[randIdx + 1] < gray ? current[randIdx + 1] += 1 : current[randIdx + 1] -= 1;
+    // current[randIdx + 2] < gray ? current[randIdx + 2] += 1 : current[randIdx + 2] -= 1;
   }
 };
 
 export const offsetPattern = function(current, original) {
   let idx = 0;
-  for (var i = 0; i < 800; i++) {
-    for (var j = 0; j < 800; j++) {
+  for (let i = 0; i < 800; i++) {
+    for (let j = 0; j < 800; j++) {
       let offsetX = i - 200;
       let offsetY = j - 200;
       let offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));

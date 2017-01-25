@@ -122,14 +122,14 @@
 	  var resetImage = function resetImage() {
 	    var randomBlue = Math.random() * 255;
 	    for (var i = 0; i < currentData.length; i += 4) {
-	      currentData[i] = Math.floor(Math.random() * randomBlue);
-	      currentData[i + 1] = Math.floor(Math.random() * 100);
-	      currentData[i + 2] = Math.floor(Math.random() * 255);
-	      currentData[i + 3] = 255;
-	      // currentData[i] = 0;
-	      // currentData[i+1] = 0;
-	      // currentData[i+2] = 0;
+	      // currentData[i] = Math.floor(Math.random() * (randomBlue));
+	      // currentData[i+1] = Math.floor(Math.random() * 100);
+	      // currentData[i+2] = Math.floor(Math.random() * 255);
 	      // currentData[i+3] = 255;
+	      currentData[i] = 0;
+	      currentData[i + 1] = 0;
+	      currentData[i + 2] = 0;
+	      currentData[i + 3] = 255;
 	    }
 	  };
 	
@@ -145,7 +145,7 @@
 	      }, 100);
 	    }
 	  };
-	  changeImage(Filters.threshold);
+	  changeImage(Filters.grayScale);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -264,26 +264,23 @@
 	  }
 	};
 	
-	var redRows = exports.redRows = function redRows(current, original) {
-	  for (var i = 0; i < original.length; i += 4) {
-	    var grayScale = 0.4 * original[i] + 0.6 * original[i + 1] + 0.12 * original[i + 2];
-	    if ((i + 1) % 4 === 0) {
-	      current[i] < grayScale ? current[i] += 1 : current[i] -= 1;
-	      current[i + 1] < grayScale ? current[i + 1] += 1 : current[i + 1] -= 1;
-	      current[i + 2] < grayScale ? current[i + 2] += 1 : current[i + 2] -= 1;
-	    } else if (i % 4 === 1) {
-	      current[i] < grayScale ? current[i] += 1 : current[i] -= 1;
-	    }
-	    current[i] = grayScale;
+	var grayScale = exports.grayScale = function grayScale(current, original) {
+	  for (var i = 0; i < original.length / (original.length * 0.001); i++) {
+	    var randIdx = Math.floor(Math.random() * original.length);
+	    var gray = 0.4 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.12 * original[randIdx + 2];
+	    current[randIdx] = gray;
+	    // current[randIdx] < gray ? current[randIdx] += 1 : current[randIdx] -= 1;
+	    // current[randIdx + 1] < gray ? current[randIdx + 1] += 1 : current[randIdx + 1] -= 1;
+	    // current[randIdx + 2] < gray ? current[randIdx + 2] += 1 : current[randIdx + 2] -= 1;
 	  }
 	};
 	
 	var offsetPattern = exports.offsetPattern = function offsetPattern(current, original) {
 	  var idx = 0;
 	  for (var i = 0; i < 800; i++) {
-	    for (var j = 0; j < 800; j++) {
+	    for (var _j = 0; _j < 800; _j++) {
 	      var offsetX = i - 200;
-	      var offsetY = j - 200;
+	      var offsetY = _j - 200;
 	      var offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
 	      var result = Math.sin(offset / 8);
 	      current[idx] += (current[idx] - result * original[idx]) * 0.05;

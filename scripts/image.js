@@ -51,14 +51,14 @@ function start(img) {
   let resetImage = function() {
     let randomBlue = Math.random() * 255;
     for (var i = 0; i < currentData.length; i+=4) {
-      currentData[i] = Math.floor(Math.random() * (randomBlue));
-      currentData[i+1] = Math.floor(Math.random() * 100);
-      currentData[i+2] = Math.floor(Math.random() * 255);
-      currentData[i+3] = 255;
-      // currentData[i] = 0;
-      // currentData[i+1] = 0;
-      // currentData[i+2] = 0;
+      // currentData[i] = Math.floor(Math.random() * (randomBlue));
+      // currentData[i+1] = Math.floor(Math.random() * 100);
+      // currentData[i+2] = Math.floor(Math.random() * 255);
       // currentData[i+3] = 255;
+      currentData[i] = 0;
+      currentData[i+1] = 0;
+      currentData[i+2] = 0;
+      currentData[i+3] = 255;
 
     }
   };
@@ -73,7 +73,7 @@ function start(img) {
       setTimeout(() => changeImage(filter), 100);
     }
   };
-  changeImage(Filters.threshold);
+  changeImage(Filters.grayScale);
 }
 
 export const checkGuess = function(guess) {
