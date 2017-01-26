@@ -1,4 +1,5 @@
 import {checkGuess, currentDescription} from './image';
+
 $(document).ready(() => {
 
   $('#guess').change(() => {
@@ -24,9 +25,15 @@ export const clearMessage = function() {
 };
 
 export const Descriptions = {};
-Descriptions.grayScale = "Grayscale conversion finds the luminosity of each pixel, and sets it's RGB channels to match";
-Descriptions.fade = 'This was a simple fade achieved by incrementing and decrementing pixels';
+Descriptions.grayScale = "Grayscale conversion finds the luminosity of each \
+ pixel, and sets it's RGB channels to match";
+Descriptions.fade = 'This was a simple fade achieved by incrementing and \
+ decrementing pixels';
 Descriptions.thresholdEasy = 'this is threshole';
 Descriptions.threshold = 'this is thresdhpld';
-Descriptions.invert = "An Inverted image is the result of subtracting each pixel's RGB values from their maximum";
-Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, then adds a uniform RGB value to it.';
+Descriptions.invert = "An Inverted image is the result of subtracting each \
+ pixel's RGB values from their maximum";
+Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \
+then adds a uniform RGB value to it';
+Descriptions.primePixels = "Here's an image with only prime RGB values. \
+Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13 etc. in memory.";

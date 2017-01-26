@@ -33,7 +33,7 @@ export const threshold = function(current, original) {
 
 export const thresholdEasy = function(current, original) {
   for (let i = 0; i < original.length; i+=4) {
-    let randIdx = Math.ceil((Math.random() * (original.length / 4)) * 4) + 1;
+    let randIdx = getRandomIndex(original);
     let red = original[randIdx];
     let green = original[randIdx+1];
     let blue = original[randIdx+2];
@@ -42,7 +42,10 @@ export const thresholdEasy = function(current, original) {
       current[randIdx]++;
       current[randIdx+1]++;
       current[randIdx+2]++;
-    } else if (extreme === 0) {
+    } else {
+      current[randIdx]--;
+      current[randIdx + 1]--;
+      current[randIdx + 2]--;
     }
   }
 };
@@ -57,11 +60,19 @@ export const randomPixels = function(current, original) {
 };
 
 export const grayScale = function(current, original) {
-  for (let i = 0; i < original.length / (original.length * 0.001); i++) {
+  let gray;
+  for (let i = 0; i < original.length; i+=4) {
+    gray = (0.3 * original[i]) +
+    (0.6 * original[i + 1]) + (0.11 * original[i + 2]);
+    original[i] = gray;
+    original[i + 1] = gray;
+    original[i + 2] = gray;
+  }
+  for (let i = 0; i < original.length / (original.length * 0.002); i++) {
     let randIdx = getRandomIndex(original);
-    let gray = (0.3 * original[randIdx]) +
-    (0.6 * original[randIdx + 1]) + (0.11 * original[randIdx + 2]);
-    current[randIdx] = gray;
+    current[randIdx] = original[randIdx];
+    current[randIdx + 1] = original[randIdx + 1];
+    current[randIdx + 2] = original[randIdx + 2];
   }
 };
 
@@ -83,7 +94,7 @@ export const sepiaTone = function(current, original) {
     let gray = (0.3 * original[randIdx]) + (0.6 * original[randIdx + 1]) +
     (0.11 * original[randIdx + 2]);
     current[randIdx] < (original[randIdx] + 125) ? current[randIdx]++ : current[randIdx]--;
-    current[randIdx + 1] < (original[randIdx + 1] + 50) ? current[randIdx + 1]++ : current[randIdx + 1]--;
+    current[randIdx + 1] < (original[randIdx + 1] + 70) ? current[randIdx + 1]++ : current[randIdx + 1]--;
     current[randIdx + 2] < (original[randIdx + 2]) ? current[randIdx + 2]++ : current[randIdx + 2]--;
   }
 };
@@ -106,14 +117,14 @@ export const offsetPattern = function(current, original) {
 
 export const primePixels = function(current, original) {
   for (var i = 1; i < original.length; i++) {
-    if (isPrime(i)) {
-      current[i] = original[i];
+    let randIdx = Math.ceil(Math.random() * original.length);
+    if (isPrime(randIdx)) {
+      current[randIdx] = original[randIdx];
     }
   }
-  console.log(current === original);
 };
 
 
 const getRandomIndex = function(arr) {
-  return Math.floor(Math.random() * arr.length);
+  return ((Math.floor(Math.random() * (arr.length) / 4)) * 4);
 };

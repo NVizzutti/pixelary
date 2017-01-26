@@ -21,6 +21,14 @@ body {
   font-size: 35px;
 }
 
+#description {
+  width: 550px;
+  padding: 10px;
+  background-color: black;
+  opacity: 0;
+  font-size: 17px;
+}
+
 canvas {
   width: 800px;
   height: 600px;

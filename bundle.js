@@ -73,8 +73,9 @@
 	
 	var running = exports.running = false;
 	var image = void 0;
-	var currentDescription = exports.currentDescription = void 0;
+	var stage = 0;
 	var selectedImage = void 0;
+	var currentDescription = exports.currentDescription = void 0;
 	var imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg'];
 	var answerString = exports.answerString = void 0;
 	
@@ -82,7 +83,9 @@
 	
 	function selectImage() {
 	  image = new Image();
-	  selectedImage = imageFile[Math.floor(Math.random() * imageFile.length)];
+	  selectedImage = imageFile[stage];
+	  stage++;
+	  stage = stage >= imageFile.length ? 0 : stage;
 	  exports.answerString = answerString = selectedImage.split('.')[0];
 	  image.src = 'images/' + selectedImage;
 	}
@@ -132,6 +135,7 @@
 	
 	  var changeImage = function changeImage(filter) {
 	    filter(currentData, originalData);
+	    ctx.scale(2, 2);
 	    ctx.putImageData(imageData, 0, 0);
 	    var timeLeft = $('#clock').text().replace(':', '');
 	    if (parseInt(timeLeft) > 0 && running) {
@@ -140,14 +144,11 @@
 	      }, 100);
 	    }
 	  };
-	
 	  resetImage();
 	  changeImage(Filters.primePixels);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
-	  console.log(guess, answerString);
-	  console.log(guess.includes(answerString));
 	  guess = guess.toLowerCase();
 	  if (guess.includes(answerString)) {
 	    exports.running = running = false;
@@ -248,7 +249,7 @@
 	
 	var thresholdEasy = exports.thresholdEasy = function thresholdEasy(current, original) {
 	  for (var i = 0; i < original.length; i += 4) {
-	    var randIdx = Math.ceil(Math.random() * (original.length / 4) * 4) + 1;
+	    var randIdx = getRandomIndex(original);
 	    var red = original[randIdx];
 	    var green = original[randIdx + 1];
 	    var blue = original[randIdx + 2];
@@ -257,7 +258,11 @@
 	      current[randIdx]++;
 	      current[randIdx + 1]++;
 	      current[randIdx + 2]++;
-	    } else if (extreme === 0) {}
+	    } else {
+	      current[randIdx]--;
+	      current[randIdx + 1]--;
+	      current[randIdx + 2]--;
+	    }
 	  }
 	};
 	
@@ -271,10 +276,18 @@
 	};
 	
 	var grayScale = exports.grayScale = function grayScale(current, original) {
-	  for (var i = 0; i < original.length / (original.length * 0.001); i++) {
+	  var gray = void 0;
+	  for (var i = 0; i < original.length; i += 4) {
+	    gray = 0.3 * original[i] + 0.6 * original[i + 1] + 0.11 * original[i + 2];
+	    original[i] = gray;
+	    original[i + 1] = gray;
+	    original[i + 2] = gray;
+	  }
+	  for (var _i = 0; _i < original.length / (original.length * 0.002); _i++) {
 	    var randIdx = getRandomIndex(original);
-	    var gray = 0.3 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.11 * original[randIdx + 2];
-	    current[randIdx] = gray;
+	    current[randIdx] = original[randIdx];
+	    current[randIdx + 1] = original[randIdx + 1];
+	    current[randIdx + 2] = original[randIdx + 2];
 	  }
 	};
 	
@@ -295,7 +308,7 @@
 	    var randIdx = getRandomIndex(original);
 	    var gray = 0.3 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.11 * original[randIdx + 2];
 	    current[randIdx] < original[randIdx] + 125 ? current[randIdx]++ : current[randIdx]--;
-	    current[randIdx + 1] < original[randIdx + 1] + 50 ? current[randIdx + 1]++ : current[randIdx + 1]--;
+	    current[randIdx + 1] < original[randIdx + 1] + 70 ? current[randIdx + 1]++ : current[randIdx + 1]--;
 	    current[randIdx + 2] < original[randIdx + 2] ? current[randIdx + 2]++ : current[randIdx + 2]--;
 	  }
 	};
@@ -318,15 +331,15 @@
 	
 	var primePixels = exports.primePixels = function primePixels(current, original) {
 	  for (var i = 1; i < original.length; i++) {
-	    if ((0, _isPrime2.default)(i)) {
-	      current[i] = original[i];
+	    var randIdx = Math.ceil(Math.random() * original.length);
+	    if ((0, _isPrime2.default)(randIdx)) {
+	      current[randIdx] = original[randIdx];
 	    }
 	  }
-	  console.log(current === original);
 	};
 	
 	var getRandomIndex = function getRandomIndex(arr) {
-	  return Math.floor(Math.random() * arr.length);
+	  return Math.floor(Math.random() * arr.length / 4) * 4;
 	};
 
 /***/ },
@@ -368,12 +381,18 @@
 	};
 	
 	var Descriptions = exports.Descriptions = {};
-	Descriptions.grayScale = "Grayscale conversion finds the luminosity of each pixel, and sets it's RGB channels to match";
-	Descriptions.fade = 'This was a simple fade achieved by incrementing and decrementing pixels';
+	Descriptions.grayScale = "Grayscale conversion finds the luminosity of each \
+	 pixel, and sets it's RGB channels to match";
+	Descriptions.fade = 'This was a simple fade achieved by incrementing and \
+	 decrementing pixels';
 	Descriptions.thresholdEasy = 'this is threshole';
 	Descriptions.threshold = 'this is thresdhpld';
-	Descriptions.invert = "An Inverted image is the result of subtracting each pixel's RGB values from their maximum";
-	Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, then adds a uniform RGB value to it.';
+	Descriptions.invert = "An Inverted image is the result of subtracting each \
+	 pixel's RGB values from their maximum";
+	Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \
+	then adds a uniform RGB value to it';
+	Descriptions.primePixels = "Here's an image with only prime RGB values. \
+	Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13 etc. in memory.";
 
 /***/ },
 /* 6 */

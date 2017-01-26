@@ -3,8 +3,9 @@ import * as Filters from './filters';
 import {clearMessage, Descriptions} from './input';
 export let running = false;
 let image;
-export let currentDescription;
+let stage = 0;
 let selectedImage;
+export let currentDescription;
 let imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg',
 'cat.jpeg','microphone.jpeg', 'grass.jpeg'];
 export let answerString;
@@ -13,7 +14,9 @@ selectImage();
 
 function selectImage() {
    image = new Image();
-   selectedImage = imageFile[Math.floor(Math.random() * imageFile.length)];
+   selectedImage = imageFile[stage];
+   stage++;
+   stage = stage >= imageFile.length ? 0 : stage;
    answerString = selectedImage.split('.')[0];
    image.src = `images/${selectedImage}`;
 }
@@ -61,20 +64,19 @@ function start(img) {
 
   let changeImage = function(filter) {
     filter(currentData, originalData);
+    ctx.scale(2, 2);
     ctx.putImageData(imageData, 0, 0);
     let timeLeft = ($('#clock').text()).replace(':', '');
     if ((parseInt(timeLeft) > 0) && running) {
       setTimeout(() => changeImage(filter), 100);
     }
   };
-
   resetImage();
   changeImage(Filters.primePixels);
 }
 
+
 export const checkGuess = function(guess) {
-  console.log(guess, answerString);
-  console.log(guess.includes(answerString));
   guess = guess.toLowerCase();
   if (guess.includes(answerString)) {
     running = false;
