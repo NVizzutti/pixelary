@@ -6,8 +6,8 @@ let image;
 let stage = 0;
 let selectedImage;
 export let currentDescription;
-let imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg',
-'cat.jpeg','microphone.jpeg', 'grass.jpeg'];
+let imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg',
+'cat.jpeg','microphone.jpeg', 'grass.jpeg', 'glasses.jpeg', 'horse.jpeg', 'tennis.jpeg'];
 export let answerString;
 
 selectImage();

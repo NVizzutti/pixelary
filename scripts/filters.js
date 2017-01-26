@@ -11,7 +11,6 @@ export const fade = function(current, original) {
 };
 
 export const threshold = function(current, original) {
-  let lastPixelBlack = true;
   let limit = Math.floor(Math.random() * 255);
   for (let i = 0; i < original.length; i+=4) {
     let red = original[i];
@@ -19,14 +18,12 @@ export const threshold = function(current, original) {
     let blue = original[i+2];
     current[i + 3] = 255;
     let extreme = (0.25 * red + 0.75 * green + 0.07 * blue > limit) ? 255 : 0;
-    if (extreme === 255 && !lastPixelBlack) {
-      lastPixelBlack = true;
+    if (extreme === 255) {
       current[i]++;
       current[i+1]++;
       current[i+2]++;
     } else if (extreme === 0) {
-      lastPixelBlack = false;
-      current[i + 3] -= 0;
+      current[i + 3] = 0;
     }
   }
 };
@@ -37,7 +34,7 @@ export const thresholdEasy = function(current, original) {
     let red = original[randIdx];
     let green = original[randIdx+1];
     let blue = original[randIdx+2];
-    let extreme = (0.25 * red + 0.75 * green + 0.07 * blue > 200) ? 255 : 0;
+    let extreme = (0.25 * red + 0.75 * green + 0.07 * blue > 115) ? 255 : 0;
     if (extreme === 255) {
       current[randIdx]++;
       current[randIdx+1]++;

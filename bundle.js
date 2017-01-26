@@ -47,7 +47,7 @@
 	'use strict';
 	
 	__webpack_require__(1);
-	__webpack_require__(5);
+	__webpack_require__(8);
 	__webpack_require__(2);
 
 /***/ },
@@ -67,7 +67,7 @@
 	
 	var Filters = _interopRequireWildcard(_filters);
 	
-	var _input = __webpack_require__(5);
+	var _input = __webpack_require__(8);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -76,7 +76,7 @@
 	var stage = 0;
 	var selectedImage = void 0;
 	var currentDescription = exports.currentDescription = void 0;
-	var imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg'];
+	var imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg', 'glasses.jpeg', 'horse.jpeg', 'tennis.jpeg'];
 	var answerString = exports.answerString = void 0;
 	
 	selectImage();
@@ -210,7 +210,7 @@
 	});
 	exports.primePixels = exports.offsetPattern = exports.sepiaTone = exports.invert = exports.grayScale = exports.randomPixels = exports.thresholdEasy = exports.threshold = exports.fade = undefined;
 	
-	var _isPrime = __webpack_require__(6);
+	var _isPrime = __webpack_require__(4);
 	
 	var _isPrime2 = _interopRequireDefault(_isPrime);
 	
@@ -227,7 +227,6 @@
 	};
 	
 	var threshold = exports.threshold = function threshold(current, original) {
-	  var lastPixelBlack = true;
 	  var limit = Math.floor(Math.random() * 255);
 	  for (var i = 0; i < original.length; i += 4) {
 	    var red = original[i];
@@ -235,14 +234,12 @@
 	    var blue = original[i + 2];
 	    current[i + 3] = 255;
 	    var extreme = 0.25 * red + 0.75 * green + 0.07 * blue > limit ? 255 : 0;
-	    if (extreme === 255 && !lastPixelBlack) {
-	      lastPixelBlack = true;
+	    if (extreme === 255) {
 	      current[i]++;
 	      current[i + 1]++;
 	      current[i + 2]++;
 	    } else if (extreme === 0) {
-	      lastPixelBlack = false;
-	      current[i + 3] -= 0;
+	      current[i + 3] = 0;
 	    }
 	  }
 	};
@@ -253,7 +250,7 @@
 	    var red = original[randIdx];
 	    var green = original[randIdx + 1];
 	    var blue = original[randIdx + 2];
-	    var extreme = 0.25 * red + 0.75 * green + 0.07 * blue > 200 ? 255 : 0;
+	    var extreme = 0.25 * red + 0.75 * green + 0.07 * blue > 115 ? 255 : 0;
 	    if (extreme === 255) {
 	      current[randIdx]++;
 	      current[randIdx + 1]++;
@@ -343,8 +340,85 @@
 	};
 
 /***/ },
-/* 4 */,
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var numberIsInteger = __webpack_require__(5);
+	
+	function isPrime (n) {
+	  if(n === 1) {
+	    return false
+	  }
+	  if (n === 2 || n === 3) {
+	    return true;
+	  }
+	  else if ( (n % 2 === 0) || (n % 3 === 0) ){
+	    return false;
+	  }
+	  else {
+	    var p=5;
+	    var w=2;
+	    while ( p * p <= n ){
+	      if (n % p === 0) { return false; }
+	      p += w;
+	      w = 6 - w;
+	    }
+	    return true;
+	  }
+	}
+	
+	module.exports = function (n) {
+	  if (typeof n !== 'number') {
+	    throw new TypeError('Expected a number');
+	  }
+	  if(n<=0) {
+	    throw new Error('The number must be a positive integer');
+	  }
+	  if(!numberIsInteger(n)){
+	    throw new Error('The number must be a integer');
+	  }
+	  return isPrime(n);
+	};
+
+
+/***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var numberIsFinite = __webpack_require__(6);
+	
+	module.exports = Number.isInteger || function (x) {
+		return numberIsFinite(x) && Math.floor(x) === x;
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var numberIsNan = __webpack_require__(7);
+	
+	module.exports = Number.isFinite || function (val) {
+		return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+	module.exports = Number.isNaN || function (x) {
+		return x !== x;
+	};
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -385,92 +459,14 @@
 	 pixel, and sets it's RGB channels to match";
 	Descriptions.fade = 'This was a simple fade achieved by incrementing and \
 	 decrementing pixels';
-	Descriptions.thresholdEasy = 'this is threshole';
-	Descriptions.threshold = 'this is thresdhpld';
+	Descriptions.thresholdEasy = 'this is thresholdE';
+	Descriptions.threshold = 'this is thresdhold';
 	Descriptions.invert = "An Inverted image is the result of subtracting each \
 	 pixel's RGB values from their maximum";
 	Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \
 	then adds a uniform RGB value to it';
 	Descriptions.primePixels = "Here's an image with only prime RGB values. \
 	Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13 etc. in memory.";
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var numberIsInteger = __webpack_require__(7);
-	
-	function isPrime (n) {
-	  if(n === 1) {
-	    return false
-	  }
-	  if (n === 2 || n === 3) {
-	    return true;
-	  }
-	  else if ( (n % 2 === 0) || (n % 3 === 0) ){
-	    return false;
-	  }
-	  else {
-	    var p=5;
-	    var w=2;
-	    while ( p * p <= n ){
-	      if (n % p === 0) { return false; }
-	      p += w;
-	      w = 6 - w;
-	    }
-	    return true;
-	  }
-	}
-	
-	module.exports = function (n) {
-	  if (typeof n !== 'number') {
-	    throw new TypeError('Expected a number');
-	  }
-	  if(n<=0) {
-	    throw new Error('The number must be a positive integer');
-	  }
-	  if(!numberIsInteger(n)){
-	    throw new Error('The number must be a integer');
-	  }
-	  return isPrime(n);
-	};
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var numberIsFinite = __webpack_require__(8);
-	
-	module.exports = Number.isInteger || function (x) {
-		return numberIsFinite(x) && Math.floor(x) === x;
-	};
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var numberIsNan = __webpack_require__(9);
-	
-	module.exports = Number.isFinite || function (val) {
-		return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
-	};
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	'use strict';
-	module.exports = Number.isNaN || function (x) {
-		return x !== x;
-	};
-
 
 /***/ }
 /******/ ]);

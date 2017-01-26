@@ -3,19 +3,24 @@
   <head>
   <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Codystar|VT323" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css"charset="utf-8">
   <script src='./bundle.js' ></script>
     <meta charset="utf-8">
-    <title></title>
+    <title>Pixelary - Image Manipulation</title>
   </head>
   <body>
+    <div class='text-only'>
+    <h1 id='title'>Pixelary</h1>
+    <h2 id='subtitle'>Exploring Algorithms for Image Filtering</h2>
+    </div>
     <div id='messages'>
-    <h1 id='message'></h1>
-    <h3 id='sub-message'></h3>
+    <h2 id='message'>Press Any Key To Begin</h2>
     <p id='description'></p>
+    <h3 id='sub-message'></h3>
   </div>
   <canvas id="img-canvas" width="800" height="500"></canvas>
   <h2 id='clock'>1:00</h2>
-  <input type='text' placeholder='Make Guess' id='guess'></input>
+  <input type='text' placeholder='Press Enter to Submit' id='guess'></input>
 </body>
 </html>

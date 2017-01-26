@@ -29,8 +29,8 @@ Descriptions.grayScale = "Grayscale conversion finds the luminosity of each \
  pixel, and sets it's RGB channels to match";
 Descriptions.fade = 'This was a simple fade achieved by incrementing and \
  decrementing pixels';
-Descriptions.thresholdEasy = 'this is threshole';
-Descriptions.threshold = 'this is thresdhpld';
+Descriptions.thresholdEasy = 'this is thresholdE';
+Descriptions.threshold = 'this is thresdhold';
 Descriptions.invert = "An Inverted image is the result of subtracting each \
  pixel's RGB values from their maximum";
 Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \
