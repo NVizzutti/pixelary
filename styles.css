@@ -10,6 +10,12 @@ body {
   font-family: sans-serif;
 }
 
+#messages {
+  position: absolute;
+  top: 225px;
+  text-align: center;
+}
+
 #message {
   height: 40px;
   font-size: 35px;

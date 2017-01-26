@@ -47,7 +47,7 @@
 	'use strict';
 	
 	__webpack_require__(1);
-	__webpack_require__(4);
+	__webpack_require__(5);
 	__webpack_require__(2);
 
 /***/ },
@@ -67,7 +67,7 @@
 	
 	var Filters = _interopRequireWildcard(_filters);
 	
-	var _input = __webpack_require__(4);
+	var _input = __webpack_require__(5);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -120,7 +120,6 @@
 	  var currentFilter = selectRandomFilter();
 	
 	  var resetImage = function resetImage() {
-	    var randomBlue = Math.random() * 255;
 	    for (var i = 0; i < currentData.length; i += 4) {
 	      currentData[i] = 0;
 	      currentData[i + 1] = 0;
@@ -141,7 +140,7 @@
 	  };
 	
 	  resetImage();
-	  changeImage(Filters.invert);
+	  changeImage(currentFilter);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -306,13 +305,19 @@
 	    }
 	  }
 	};
+	// 
+	// export const sobelEdge = function(current, original) {
+	//
+	// };
+	
 	
 	var getRandomIndex = function getRandomIndex(arr) {
 	  return Math.floor(Math.random() * arr.length);
 	};
 
 /***/ },
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -337,11 +342,15 @@
 	});
 	
 	function displayMessage() {
-	  $('#message').text('Correct!');
+	  // $('#message').text('Correct!');
+	  // $('#sub-message').text('Press Enter to Continue');
+	  $('#message').text('Correct!').fadeTo('slow', 1);
+	  $('#sub-message').text('Press Any Key to Continue').fadeTo('slow', 1);
 	}
 	
 	var clearMessage = exports.clearMessage = function clearMessage() {
-	  $('#message').text('');
+	  $('#sub-message').fadeTo('slow', 0);
+	  $('#message').fadeTo('slow', 0);
 	};
 
 /***/ }

@@ -101,6 +101,11 @@ export const offsetPattern = function(current, original) {
     }
   }
 };
+// 
+// export const sobelEdge = function(current, original) {
+//
+// };
+
 
 const getRandomIndex = function(arr) {
   return Math.floor(Math.random() * arr.length);

@@ -49,7 +49,6 @@ function start(img) {
   let currentFilter = selectRandomFilter();
 
   let resetImage = function() {
-    let randomBlue = Math.random() * 255;
     for (var i = 0; i < currentData.length; i+=4) {
       currentData[i] = 0;
       currentData[i+1] = 0;
@@ -68,7 +67,7 @@ function start(img) {
   };
 
   resetImage();
-  changeImage(Filters.invert);
+  changeImage(currentFilter);
 }
 
 export const checkGuess = function(guess) {

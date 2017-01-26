@@ -12,9 +12,13 @@ $(document).ready(() => {
 });
 
 function displayMessage() {
-  $('#message').text('Correct!');
+  // $('#message').text('Correct!');
+  // $('#sub-message').text('Press Enter to Continue');
+  $('#message').text('Correct!').fadeTo('slow',1);
+  $('#sub-message').text('Press Any Key to Continue').fadeTo('slow', 1);
 }
 
 export const clearMessage = function() {
-  $('#message').text('');
+  $('#sub-message').fadeTo('slow', 0);
+  $('#message').fadeTo('slow', 0);
 };
