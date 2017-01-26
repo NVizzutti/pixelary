@@ -1,8 +1,9 @@
 import {tickClock, resetTimer} from './timer';
 import * as Filters from './filters';
-import {clearMessage} from './input';
+import {clearMessage, Descriptions} from './input';
 export let running = false;
 let image;
+export let currentDescription;
 let selectedImage;
 let imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg',
 'cat.jpeg','microphone.jpeg', 'grass.jpeg'];
@@ -20,6 +21,7 @@ function selectImage() {
 function selectRandomFilter() {
   let objKeys = Object.keys(Filters);
   let selectedKey = objKeys[Math.floor(Math.random() * objKeys.length)];
+  currentDescription = Descriptions[selectedKey];
   return Filters[selectedKey];
 }
 
@@ -67,7 +69,7 @@ function start(img) {
   };
 
   resetImage();
-  changeImage(currentFilter);
+  changeImage(Filters.primePixels);
 }
 
 export const checkGuess = function(guess) {

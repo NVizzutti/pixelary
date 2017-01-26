@@ -59,7 +59,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.checkGuess = exports.answerString = exports.running = undefined;
+	exports.checkGuess = exports.answerString = exports.currentDescription = exports.running = undefined;
 	
 	var _timer = __webpack_require__(2);
 	
@@ -73,6 +73,7 @@
 	
 	var running = exports.running = false;
 	var image = void 0;
+	var currentDescription = exports.currentDescription = void 0;
 	var selectedImage = void 0;
 	var imageFile = ['dog.jpg', 'flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg'];
 	var answerString = exports.answerString = void 0;
@@ -89,6 +90,7 @@
 	function selectRandomFilter() {
 	  var objKeys = Object.keys(Filters);
 	  var selectedKey = objKeys[Math.floor(Math.random() * objKeys.length)];
+	  exports.currentDescription = currentDescription = _input.Descriptions[selectedKey];
 	  return Filters[selectedKey];
 	}
 	
@@ -140,7 +142,7 @@
 	  };
 	
 	  resetImage();
-	  changeImage(currentFilter);
+	  changeImage(Filters.primePixels);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -198,13 +200,21 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.primePixels = exports.offsetPattern = exports.sepiaTone = exports.invert = exports.grayScale = exports.randomPixels = exports.thresholdEasy = exports.threshold = exports.fade = undefined;
+	
+	var _isPrime = __webpack_require__(6);
+	
+	var _isPrime2 = _interopRequireDefault(_isPrime);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var fade = exports.fade = function fade(current, original) {
 	  for (var i = 0; i < current.length; i++) {
 	    if (current[i] < original[i]) {
@@ -231,7 +241,7 @@
 	      current[i + 2]++;
 	    } else if (extreme === 0) {
 	      lastPixelBlack = false;
-	      current[i] -= 1;
+	      current[i + 3] -= 0;
 	    }
 	  }
 	};
@@ -305,11 +315,15 @@
 	    }
 	  }
 	};
-	// 
-	// export const sobelEdge = function(current, original) {
-	//
-	// };
 	
+	var primePixels = exports.primePixels = function primePixels(current, original) {
+	  for (var i = 1; i < original.length; i++) {
+	    if ((0, _isPrime2.default)(i)) {
+	      current[i] = original[i];
+	    }
+	  }
+	  console.log(current === original);
+	};
 	
 	var getRandomIndex = function getRandomIndex(arr) {
 	  return Math.floor(Math.random() * arr.length);
@@ -325,7 +339,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.clearMessage = undefined;
+	exports.Descriptions = exports.clearMessage = undefined;
 	
 	var _image = __webpack_require__(1);
 	
@@ -342,16 +356,102 @@
 	});
 	
 	function displayMessage() {
-	  // $('#message').text('Correct!');
-	  // $('#sub-message').text('Press Enter to Continue');
 	  $('#message').text('Correct!').fadeTo('slow', 1);
 	  $('#sub-message').text('Press Any Key to Continue').fadeTo('slow', 1);
+	  $('#description').text(_image.currentDescription).fadeTo('slow', 1);
 	}
 	
 	var clearMessage = exports.clearMessage = function clearMessage() {
 	  $('#sub-message').fadeTo('slow', 0);
 	  $('#message').fadeTo('slow', 0);
+	  $('#description').fadeTo('slow', 0);
 	};
+	
+	var Descriptions = exports.Descriptions = {};
+	Descriptions.grayScale = "Grayscale conversion finds the luminosity of each pixel, and sets it's RGB channels to match";
+	Descriptions.fade = 'This was a simple fade achieved by incrementing and decrementing pixels';
+	Descriptions.thresholdEasy = 'this is threshole';
+	Descriptions.threshold = 'this is thresdhpld';
+	Descriptions.invert = "An Inverted image is the result of subtracting each pixel's RGB values from their maximum";
+	Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, then adds a uniform RGB value to it.';
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var numberIsInteger = __webpack_require__(7);
+	
+	function isPrime (n) {
+	  if(n === 1) {
+	    return false
+	  }
+	  if (n === 2 || n === 3) {
+	    return true;
+	  }
+	  else if ( (n % 2 === 0) || (n % 3 === 0) ){
+	    return false;
+	  }
+	  else {
+	    var p=5;
+	    var w=2;
+	    while ( p * p <= n ){
+	      if (n % p === 0) { return false; }
+	      p += w;
+	      w = 6 - w;
+	    }
+	    return true;
+	  }
+	}
+	
+	module.exports = function (n) {
+	  if (typeof n !== 'number') {
+	    throw new TypeError('Expected a number');
+	  }
+	  if(n<=0) {
+	    throw new Error('The number must be a positive integer');
+	  }
+	  if(!numberIsInteger(n)){
+	    throw new Error('The number must be a integer');
+	  }
+	  return isPrime(n);
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var numberIsFinite = __webpack_require__(8);
+	
+	module.exports = Number.isInteger || function (x) {
+		return numberIsFinite(x) && Math.floor(x) === x;
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var numberIsNan = __webpack_require__(9);
+	
+	module.exports = Number.isFinite || function (val) {
+		return !(typeof val !== 'number' || numberIsNan(val) || val === Infinity || val === -Infinity);
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+	module.exports = Number.isNaN || function (x) {
+		return x !== x;
+	};
+
 
 /***/ }
 /******/ ]);

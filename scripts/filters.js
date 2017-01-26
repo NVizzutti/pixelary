@@ -1,3 +1,5 @@
+import isPrime from 'is-prime';
+
 export const fade = function(current, original) {
   for (let i = 0; i < current.length; i ++) {
     if (current[i] < original[i]) {
@@ -24,7 +26,7 @@ export const threshold = function(current, original) {
       current[i+2]++;
     } else if (extreme === 0) {
       lastPixelBlack = false;
-      current[i] -= 1;
+      current[i + 3] -= 0;
     }
   }
 };
@@ -101,10 +103,15 @@ export const offsetPattern = function(current, original) {
     }
   }
 };
-// 
-// export const sobelEdge = function(current, original) {
-//
-// };
+
+export const primePixels = function(current, original) {
+  for (var i = 1; i < original.length; i++) {
+    if (isPrime(i)) {
+      current[i] = original[i];
+    }
+  }
+  console.log(current === original);
+};
 
 
 const getRandomIndex = function(arr) {
