@@ -10,6 +10,7 @@ export const tickClock = function() {
     seconds = 59;
     minutes -= 1;
   }
+
   let minutesStr = minutes.toString();
   let secondsStr = seconds.toString();
   let newString = `${minutesStr}:${secondsStr}`;

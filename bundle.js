@@ -122,18 +122,12 @@
 	  var resetImage = function resetImage() {
 	    var randomBlue = Math.random() * 255;
 	    for (var i = 0; i < currentData.length; i += 4) {
-	      // currentData[i] = Math.floor(Math.random() * (randomBlue));
-	      // currentData[i+1] = Math.floor(Math.random() * 100);
-	      // currentData[i+2] = Math.floor(Math.random() * 255);
-	      // currentData[i+3] = 255;
 	      currentData[i] = 0;
 	      currentData[i + 1] = 0;
 	      currentData[i + 2] = 0;
 	      currentData[i + 3] = 255;
 	    }
 	  };
-	
-	  resetImage();
 	
 	  var changeImage = function changeImage(filter) {
 	    filter(currentData, originalData);
@@ -145,7 +139,9 @@
 	      }, 100);
 	    }
 	  };
-	  changeImage(Filters.grayScale);
+	
+	  resetImage();
+	  changeImage(Filters.invert);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -185,6 +181,7 @@
 	    seconds = 59;
 	    minutes -= 1;
 	  }
+	
 	  var minutesStr = minutes.toString();
 	  var secondsStr = seconds.toString();
 	  var newString = minutesStr + ':' + secondsStr;
@@ -257,7 +254,7 @@
 	
 	var randomPixels = exports.randomPixels = function randomPixels(current, original) {
 	  for (var i = 0; i < original.length / (original.length * 0.002); i += 4) {
-	    var randIdx = Math.floor(Math.random() * original.length);
+	    var randIdx = getRandomIndex(original);
 	    current[randIdx] = original[randIdx];
 	    current[randIdx + 1] = original[randIdx + 1];
 	    current[randIdx + 2] = original[randIdx + 2];
@@ -266,31 +263,52 @@
 	
 	var grayScale = exports.grayScale = function grayScale(current, original) {
 	  for (var i = 0; i < original.length / (original.length * 0.001); i++) {
-	    var randIdx = Math.floor(Math.random() * original.length);
-	    var gray = 0.4 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.12 * original[randIdx + 2];
+	    var randIdx = getRandomIndex(original);
+	    var gray = 0.3 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.11 * original[randIdx + 2];
 	    current[randIdx] = gray;
-	    // current[randIdx] < gray ? current[randIdx] += 1 : current[randIdx] -= 1;
-	    // current[randIdx + 1] < gray ? current[randIdx + 1] += 1 : current[randIdx + 1] -= 1;
-	    // current[randIdx + 2] < gray ? current[randIdx + 2] += 1 : current[randIdx + 2] -= 1;
+	  }
+	};
+	
+	var invert = exports.invert = function invert(current, original) {
+	  for (var i = 0; i < original.length; i += 4) {
+	    var randIdx = getRandomIndex(original);
+	    var red = 255 - original[i];
+	    var green = 255 - original[i + 1];
+	    var blue = 255 - original[i + 2];
+	    original[i] < red ? current[i]++ : current[i]--;
+	    original[i + 1] < green ? current[i + 1]++ : current[i + 2]--;
+	    original[i + 2] < blue ? current[i + 2]++ : current[i + 2]--;
+	  }
+	};
+	
+	var sepiaTone = exports.sepiaTone = function sepiaTone(current, original) {
+	  for (var i = 0; i < original.length; i += 4) {
+	    var randIdx = getRandomIndex(original);
+	    var gray = 0.3 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.11 * original[randIdx + 2];
+	    current[randIdx] < original[randIdx] + 125 ? current[randIdx]++ : current[randIdx]--;
+	    current[randIdx + 1] < original[randIdx + 1] + 50 ? current[randIdx + 1]++ : current[randIdx + 1]--;
+	    current[randIdx + 2] < original[randIdx + 2] ? current[randIdx + 2]++ : current[randIdx + 2]--;
 	  }
 	};
 	
 	var offsetPattern = exports.offsetPattern = function offsetPattern(current, original) {
 	  var idx = 0;
 	  for (var i = 0; i < 800; i++) {
-	    for (var _j = 0; _j < 800; _j++) {
+	    for (var j = 0; j < 800; j++) {
 	      var offsetX = i - 200;
-	      var offsetY = _j - 200;
+	      var offsetY = j - 200;
 	      var offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
 	      var result = Math.sin(offset / 8);
-	      current[idx] += (current[idx] - result * original[idx]) * 0.05;
-	      current[idx += 1] += (current[idx] - result * original[idx + 1]) * 0.1;
-	      current[idx += 1] += (current[idx] - result * original[idx + 2]) * 0.1;
+	      current[idx] += (original[idx] - result * original[idx]) * 0.05;
+	      current[idx += 1] += (original[idx] - result * original[idx + 1]) * 0.1;
+	      current[idx += 1] += (original[idx] - result * original[idx + 2]) * 0.1;
 	      current[idx += 1] = 200;
 	    }
-	    current[i] = original[i];
-	    current[j] = original[j];
 	  }
+	};
+	
+	var getRandomIndex = function getRandomIndex(arr) {
+	  return Math.floor(Math.random() * arr.length);
 	};
 
 /***/ },

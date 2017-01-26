@@ -47,7 +47,7 @@ export const thresholdEasy = function(current, original) {
 
 export const randomPixels = function(current, original) {
   for (let i = 0; i < (original.length / (original.length * 0.002)); i+=4) {
-    let randIdx = Math.floor(Math.random() * original.length);
+    let randIdx = getRandomIndex(original);
     current[randIdx] = original[randIdx];
     current[randIdx + 1] = original[randIdx + 1];
     current[randIdx + 2] = original[randIdx + 2];
@@ -56,13 +56,33 @@ export const randomPixels = function(current, original) {
 
 export const grayScale = function(current, original) {
   for (let i = 0; i < original.length / (original.length * 0.001); i++) {
-    let randIdx = Math.floor(Math.random() * original.length);
-    let gray = (0.4 * original[randIdx]) +
-    (0.6 * original[randIdx + 1]) + (0.12 * original[randIdx + 2]);
+    let randIdx = getRandomIndex(original);
+    let gray = (0.3 * original[randIdx]) +
+    (0.6 * original[randIdx + 1]) + (0.11 * original[randIdx + 2]);
     current[randIdx] = gray;
-    // current[randIdx] < gray ? current[randIdx] += 1 : current[randIdx] -= 1;
-    // current[randIdx + 1] < gray ? current[randIdx + 1] += 1 : current[randIdx + 1] -= 1;
-    // current[randIdx + 2] < gray ? current[randIdx + 2] += 1 : current[randIdx + 2] -= 1;
+  }
+};
+
+export const invert = function(current, original) {
+  for (let i = 0; i < original.length; i+= 4) {
+    let randIdx = getRandomIndex(original);
+    let red = 255 - original[i];
+    let green = 255 - original[i + 1];
+    let blue = 255 - original[i + 2];
+    original[i] < red ? current[i]++ : current[i]--;
+    original[i + 1] < green ? current[i + 1]++ : current[i + 2]--;
+    original[i + 2] < blue ? current[i + 2]++ : current[i + 2]--;
+  }
+};
+
+export const sepiaTone = function(current, original) {
+  for (let i = 0; i < original.length; i+= 4) {
+    let randIdx = getRandomIndex(original);
+    let gray = (0.3 * original[randIdx]) + (0.6 * original[randIdx + 1]) +
+    (0.11 * original[randIdx + 2]);
+    current[randIdx] < (original[randIdx] + 125) ? current[randIdx]++ : current[randIdx]--;
+    current[randIdx + 1] < (original[randIdx + 1] + 50) ? current[randIdx + 1]++ : current[randIdx + 1]--;
+    current[randIdx + 2] < (original[randIdx + 2]) ? current[randIdx + 2]++ : current[randIdx + 2]--;
   }
 };
 
@@ -74,12 +94,14 @@ export const offsetPattern = function(current, original) {
       let offsetY = j - 200;
       let offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
       let result = Math.sin(offset/8);
-      current[idx] += (current[idx] - (result * original[idx])) * 0.05;
-      current[idx+= 1] += (current[idx] - (result * original[idx + 1])) * 0.1;
-      current[idx+= 1] += (current[idx] - (result * original[idx + 2])) * 0.1;
+      current[idx] += (original[idx] - (result * original[idx])) * 0.05;
+      current[idx+= 1] += (original[idx] - (result * original[idx + 1])) * 0.1;
+      current[idx+= 1] += (original[idx] - (result * original[idx + 2])) * 0.1;
       current[idx+= 1] = 200;
     }
-    current[i] = original[i];
-    current[j] = original[j];
   }
+};
+
+const getRandomIndex = function(arr) {
+  return Math.floor(Math.random() * arr.length);
 };
