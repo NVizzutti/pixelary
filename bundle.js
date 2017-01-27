@@ -49,6 +49,8 @@
 	__webpack_require__(1);
 	__webpack_require__(8);
 	__webpack_require__(2);
+	__webpack_require__(3);
+	window.running = false;
 
 /***/ },
 /* 1 */
@@ -59,7 +61,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.checkGuess = exports.answerString = exports.currentDescription = exports.running = undefined;
+	exports.checkGuess = exports.answerString = exports.currentDescription = undefined;
 	
 	var _timer = __webpack_require__(2);
 	
@@ -71,7 +73,6 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	var running = exports.running = false;
 	var image = void 0;
 	var stage = 0;
 	var selectedImage = void 0;
@@ -84,10 +85,10 @@
 	function selectImage() {
 	  image = new Image();
 	  selectedImage = imageFile[stage];
-	  stage++;
 	  stage = stage >= imageFile.length ? 0 : stage;
 	  exports.answerString = answerString = selectedImage.split('.')[0];
 	  image.src = 'images/' + selectedImage;
+	  stage++;
 	}
 	
 	function selectRandomFilter() {
@@ -98,7 +99,7 @@
 	}
 	
 	$(document).keypress(function () {
-	  if (!running) {
+	  if (!window.running) {
 	    (0, _input.clearMessage)();
 	    (0, _timer.resetTimer)();
 	    start(image);
@@ -107,7 +108,7 @@
 	});
 	
 	function start(img) {
-	  exports.running = running = true;
+	  window.running = true;
 	  var hiddenCanvas = document.createElement('canvas');
 	  var hiddenCtx = hiddenCanvas.getContext('2d');
 	  hiddenCanvas.height = img.height;
@@ -138,26 +139,28 @@
 	    ctx.scale(2, 2);
 	    ctx.putImageData(imageData, 0, 0);
 	    var timeLeft = $('#clock').text().replace(':', '');
-	    if (parseInt(timeLeft) > 0 && running) {
+	    if (parseInt(timeLeft) > 0 && window.window.running) {
 	      setTimeout(function () {
 	        return changeImage(filter);
 	      }, 100);
 	    }
 	  };
 	  resetImage();
-	  changeImage(Filters.sepiaTone);
+	  changeImage(currentFilter);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
 	  guess = guess.toLowerCase();
 	  if (guess.includes(answerString)) {
-	    exports.running = running = false;
+	    window.running = false;
 	    selectImage();
 	    (0, _timer.resetTimer)();
 	    return true;
 	  }
 	  return false;
 	};
+	
+	window.selectImage = selectImage;
 
 /***/ },
 /* 2 */
@@ -189,15 +192,18 @@
 	  var zero = seconds < 10 ? '0' : '';
 	  var newString = minutesStr + ':' + zero + secondsStr;
 	  $('#clock').text(newString);
-	  if ((minutes > 0 || seconds > 0) && _image.running) {
+	  if ((minutes > 0 || seconds > 0) && window.running) {
 	    setTimeout(tickClock, 1000);
 	  } else if (minutes <= 0 && seconds <= 0) {
-	    $('#messages').text('Answer was ' + _image.answerString);
+	    $('#message').text('Answer was ' + _image.answerString).fadeTo('slow', 1);
+	    $('#sub-message').text('Press Any Key To Continue').fadeTo('slow', 1);
+	    window.running = false;
+	    window.selectImage();
 	  }
 	};
 	
 	var resetTimer = exports.resetTimer = function resetTimer() {
-	  $('#clock').text('1:00');
+	  $('#clock').text('0:04');
 	};
 
 /***/ },

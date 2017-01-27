@@ -41,7 +41,7 @@ This project will be primarily implemented using Vanilla JavaScript and HTML5 Ca
 
 ### Bonuses
 
-  If the MVPs are completed earlier than expected, there are a few ways to improve the project: 
+  If the MVPs are completed earlier than expected, there are a few ways to improve the project:
 
 - [ ] Have mixed images, where users guess two words instead of one.
 - [ ] Give the images some effects from easel.js, such as perspective, blur, etc.

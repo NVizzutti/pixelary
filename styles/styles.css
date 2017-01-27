@@ -8,7 +8,6 @@ body {
 }
 
 h1 {
-  font-size: 60px;
   font-weight: bold;
   color: #ff0095;
   font-family: 'Codystar', cursive;
@@ -32,7 +31,8 @@ h1 {
 }
 
 #messages {
-  font-size: 60px;
+  padding-top: auto;
+  padding-bottom: auto;
   top: 355px;
   position: absolute;
   text-align: center;
@@ -43,6 +43,9 @@ h1 {
   font-size: 45px;
 }
 
+#sub-message {
+  font-size: 25px;
+}
 #description {
   width: 550px;
   padding: 10px;

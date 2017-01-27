@@ -1,7 +1,6 @@
 import {tickClock, resetTimer} from './timer';
 import * as Filters from './filters';
 import {clearMessage, Descriptions} from './input';
-export let running = false;
 let image;
 let stage = 0;
 let selectedImage;
@@ -15,11 +14,12 @@ selectImage();
 function selectImage() {
    image = new Image();
    selectedImage = imageFile[stage];
-   stage++;
    stage = stage >= imageFile.length ? 0 : stage;
    answerString = selectedImage.split('.')[0];
    image.src = `images/${selectedImage}`;
+   stage++;
 }
+
 
 function selectRandomFilter() {
   let objKeys = Object.keys(Filters);
@@ -29,7 +29,7 @@ function selectRandomFilter() {
 }
 
 $(document).keypress(() => {
-    if (!running) {
+    if (!window.running) {
       clearMessage();
       resetTimer();
       start(image);
@@ -38,7 +38,7 @@ $(document).keypress(() => {
 });
 
 function start(img) {
-  running = true;
+  window.running = true;
   let hiddenCanvas = document.createElement('canvas');
   let hiddenCtx = hiddenCanvas.getContext('2d');
   hiddenCanvas.height = img.height;
@@ -67,22 +67,24 @@ function start(img) {
     ctx.scale(2, 2);
     ctx.putImageData(imageData, 0, 0);
     let timeLeft = ($('#clock').text()).replace(':', '');
-    if ((parseInt(timeLeft) > 0) && running) {
+    if ((parseInt(timeLeft) > 0) && window.window.running) {
       setTimeout(() => changeImage(filter), 100);
     }
   };
   resetImage();
-  changeImage(Filters.sepiaTone);
+  changeImage(currentFilter);
 }
 
 
 export const checkGuess = function(guess) {
   guess = guess.toLowerCase();
   if (guess.includes(answerString)) {
-    running = false;
+    window.running = false;
     selectImage();
     resetTimer();
     return true;
   }
   return false;
 };
+
+window.selectImage = selectImage;

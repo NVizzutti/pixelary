@@ -1,4 +1,4 @@
-import {running, answerString} from './image';
+import {answerString, selectImage} from './image';
 let timeString;
 
 export const tickClock = function() {
@@ -16,13 +16,16 @@ export const tickClock = function() {
   let zero = seconds < 10 ? '0' : '';
   let newString = `${minutesStr}:${zero}${secondsStr}`;
   $('#clock').text(newString);
-  if ((minutes > 0 || seconds > 0) && running) {
+  if ((minutes > 0 || seconds > 0) && window.running) {
     setTimeout(tickClock, 1000);
   } else if (minutes <= 0 && seconds <= 0) {
-    $('#messages').text(`Answer was ${answerString}`);
+    $('#message').text(`Answer was ${answerString}`).fadeTo('slow', 1);
+    $('#sub-message').text('Press Any Key To Continue').fadeTo('slow', 1);
+    window.running = false;
+    window.selectImage();
   }
 };
 
 export const resetTimer = function() {
-  $('#clock').text('1:00');
+  $('#clock').text('0:04');
 };
