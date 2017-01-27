@@ -98,13 +98,21 @@
 	  return Filters[selectedKey];
 	}
 	
-	$(document).keypress(function () {
-	  if (!window.running) {
-	    (0, _input.clearMessage)();
-	    (0, _timer.resetTimer)();
-	    start(image);
-	    (0, _timer.tickClock)();
-	  }
+	$(document).ready(function () {
+	  $('#stop').click(function () {
+	    console.log('h');
+	    window.running = false;
+	    selectImage();
+	  });
+	
+	  $(document).keypress(function () {
+	    if (!window.running) {
+	      (0, _input.clearMessage)();
+	      (0, _timer.resetTimer)();
+	      start(image);
+	      (0, _timer.tickClock)();
+	    }
+	  });
 	});
 	
 	function start(img) {

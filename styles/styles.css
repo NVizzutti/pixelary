@@ -73,6 +73,16 @@ input {
   margin-bottom: 20px;
 }
 
+button {
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  background-color: rgb(161, 0, 94);
+  border-radius: 5px;
+  margin: 5px;
+  height: 50px;
+  width: 250px;
+}
+
 .links {
   border-radius: 7px;
   margin: 7px;

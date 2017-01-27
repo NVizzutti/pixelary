@@ -31,5 +31,6 @@ Iterating through an array of 1,920,000 elements is not cheap, and doing it mult
 ###Future Directions
 
 - [ ] Optimize filter operations and call stack
+- [ ] Have optional display of visualizations and explanations
 - [ ] Increase interactivity by having user select algorithms
-- [ ] Complete more complicated algorithms including convolving images. 
+- [ ] Complete more complicated algorithms including convolving images.
