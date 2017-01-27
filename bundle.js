@@ -145,7 +145,7 @@
 	    }
 	  };
 	  resetImage();
-	  changeImage(currentFilter);
+	  changeImage(Filters.sepiaTone);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -182,23 +182,22 @@
 	  if (seconds < 0) {
 	    seconds = 59;
 	    minutes -= 1;
-	  } else if (seconds < 10) {
-	    seconds = '0' + toString(seconds);
 	  }
 	
 	  var minutesStr = minutes.toString();
 	  var secondsStr = seconds.toString();
-	  var newString = minutesStr + ':' + secondsStr;
+	  var zero = seconds < 10 ? '0' : '';
+	  var newString = minutesStr + ':' + zero + secondsStr;
 	  $('#clock').text(newString);
 	  if ((minutes > 0 || seconds > 0) && _image.running) {
-	    setTimeout(tickClock, 1000);
-	  } else if (minutes <= 0 && parseInt(seconds) <= 0) {
-	    $('#message').text('Answer was ' + _image.answerString);
+	    setTimeout(tickClock, 100);
+	  } else if (minutes <= 0 && seconds <= 0) {
+	    $('#messages').text('Answer was ' + _image.answerString);
 	  }
 	};
 	
 	var resetTimer = exports.resetTimer = function resetTimer() {
-	  $('#clock').text('1:00');
+	  $('#clock').text('0:09');
 	};
 
 /***/ },
@@ -307,7 +306,7 @@
 	    var randIdx = getRandomIndex(original);
 	    var gray = 0.3 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.11 * original[randIdx + 2];
 	    current[randIdx] < original[randIdx] + 125 ? current[randIdx]++ : current[randIdx]--;
-	    current[randIdx + 1] < original[randIdx + 1] + 70 ? current[randIdx + 1]++ : current[randIdx + 1]--;
+	    current[randIdx + 1] < original[randIdx + 1] + 50 ? current[randIdx + 1]++ : current[randIdx + 1]--;
 	    current[randIdx + 2] < original[randIdx + 2] ? current[randIdx + 2]++ : current[randIdx + 2]--;
 	  }
 	};

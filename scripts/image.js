@@ -72,7 +72,7 @@ function start(img) {
     }
   };
   resetImage();
-  changeImage(currentFilter);
+  changeImage(Filters.sepiaTone);
 }
 
 

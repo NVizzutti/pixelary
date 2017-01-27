@@ -91,7 +91,7 @@ export const sepiaTone = function(current, original) {
     let gray = (0.3 * original[randIdx]) + (0.6 * original[randIdx + 1]) +
     (0.11 * original[randIdx + 2]);
     current[randIdx] < (original[randIdx] + 125) ? current[randIdx]++ : current[randIdx]--;
-    current[randIdx + 1] < (original[randIdx + 1] + 70) ? current[randIdx + 1]++ : current[randIdx + 1]--;
+    current[randIdx + 1] < (original[randIdx + 1] + 50) ? current[randIdx + 1]++ : current[randIdx + 1]--;
     current[randIdx + 2] < (original[randIdx + 2]) ? current[randIdx + 2]++ : current[randIdx + 2]--;
   }
 };

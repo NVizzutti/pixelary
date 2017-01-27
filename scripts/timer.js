@@ -9,21 +9,20 @@ export const tickClock = function() {
   if (seconds < 0) {
     seconds = 59;
     minutes -= 1;
-  } else if (seconds < 10) {
-    seconds = `0${toString(seconds)}`;
   }
 
   let minutesStr = minutes.toString();
   let secondsStr = seconds.toString();
-  let newString = `${minutesStr}:${secondsStr}`;
+  let zero = seconds < 10 ? '0' : '';
+  let newString = `${minutesStr}:${zero}${secondsStr}`;
   $('#clock').text(newString);
   if ((minutes > 0 || seconds > 0) && running) {
-    setTimeout(tickClock, 1000);
-  } else if (minutes <= 0 && parseInt(seconds) <= 0) {
-    $('#message').text(`Answer was ${answerString}`);
+    setTimeout(tickClock, 100);
+  } else if (minutes <= 0 && seconds <= 0) {
+    $('#messages').text(`Answer was ${answerString}`);
   }
 };
 
 export const resetTimer = function() {
-  $('#clock').text('1:00');
+  $('#clock').text('0:09');
 };
