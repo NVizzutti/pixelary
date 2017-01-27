@@ -142,7 +142,7 @@
 	    if (parseInt(timeLeft) > 0 && window.window.running) {
 	      setTimeout(function () {
 	        return changeImage(filter);
-	      }, 100);
+	      }, 500);
 	    }
 	  };
 	  resetImage();
@@ -203,7 +203,7 @@
 	};
 	
 	var resetTimer = exports.resetTimer = function resetTimer() {
-	  $('#clock').text('0:04');
+	  $('#clock').text('1:00');
 	};
 
 /***/ },

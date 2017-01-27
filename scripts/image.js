@@ -68,7 +68,7 @@ function start(img) {
     ctx.putImageData(imageData, 0, 0);
     let timeLeft = ($('#clock').text()).replace(':', '');
     if ((parseInt(timeLeft) > 0) && window.window.running) {
-      setTimeout(() => changeImage(filter), 100);
+      setTimeout(() => changeImage(filter), 500);
     }
   };
   resetImage();

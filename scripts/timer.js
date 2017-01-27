@@ -27,5 +27,5 @@ export const tickClock = function() {
 };
 
 export const resetTimer = function() {
-  $('#clock').text('0:04');
+  $('#clock').text('1:00');
 };
