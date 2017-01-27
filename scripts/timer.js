@@ -17,12 +17,12 @@ export const tickClock = function() {
   let newString = `${minutesStr}:${zero}${secondsStr}`;
   $('#clock').text(newString);
   if ((minutes > 0 || seconds > 0) && running) {
-    setTimeout(tickClock, 100);
+    setTimeout(tickClock, 1000);
   } else if (minutes <= 0 && seconds <= 0) {
     $('#messages').text(`Answer was ${answerString}`);
   }
 };
 
 export const resetTimer = function() {
-  $('#clock').text('0:09');
+  $('#clock').text('1:00');
 };

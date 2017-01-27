@@ -190,14 +190,14 @@
 	  var newString = minutesStr + ':' + zero + secondsStr;
 	  $('#clock').text(newString);
 	  if ((minutes > 0 || seconds > 0) && _image.running) {
-	    setTimeout(tickClock, 100);
+	    setTimeout(tickClock, 1000);
 	  } else if (minutes <= 0 && seconds <= 0) {
 	    $('#messages').text('Answer was ' + _image.answerString);
 	  }
 	};
 	
 	var resetTimer = exports.resetTimer = function resetTimer() {
-	  $('#clock').text('0:09');
+	  $('#clock').text('1:00');
 	};
 
 /***/ },
