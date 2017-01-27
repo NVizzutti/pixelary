@@ -25,6 +25,11 @@ export const clearMessage = function() {
 };
 
 export const Descriptions = {};
+Descriptions.offsetPattern = "Adjusting pixel luminosity based on distance from \
+a point on the canvas gives you a circular pattern. You can see where the reference \
+points reset.";
+Descriptions.randomPixels = "This pixel randomizer just selects a random pixel \
+and sets it's correct values, revealing the image.";
 Descriptions.grayScale = "Grayscale conversion finds the luminosity of each \
  pixel, and sets it's RGB channels to match";
 Descriptions.fade = 'This was a simple fade achieved by incrementing and \

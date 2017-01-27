@@ -10,7 +10,7 @@ export const tickClock = function() {
     seconds = 59;
     minutes -= 1;
   } else if (seconds < 10) {
-    seconds = `0${parseInt(seconds)}`;
+    seconds = `0${toString(seconds)}`;
   }
 
   let minutesStr = minutes.toString();
@@ -19,7 +19,7 @@ export const tickClock = function() {
   $('#clock').text(newString);
   if ((minutes > 0 || seconds > 0) && running) {
     setTimeout(tickClock, 1000);
-  } else if (minutes <= 0 && seconds <= 0) {
+  } else if (minutes <= 0 && parseInt(seconds) <= 0) {
     $('#message').text(`Answer was ${answerString}`);
   }
 };
