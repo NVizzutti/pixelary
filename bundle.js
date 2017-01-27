@@ -76,7 +76,7 @@
 	var stage = 0;
 	var selectedImage = void 0;
 	var currentDescription = exports.currentDescription = void 0;
-	var imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg', 'glasses.jpeg', 'horse.jpeg', 'tennis.jpeg'];
+	var imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg', 'glasses.jpg', 'horse.jpeg', 'tennis.jpeg'];
 	var answerString = exports.answerString = void 0;
 	
 	selectImage();
@@ -145,7 +145,7 @@
 	    }
 	  };
 	  resetImage();
-	  changeImage(Filters.primePixels);
+	  changeImage(currentFilter);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -182,6 +182,8 @@
 	  if (seconds < 0) {
 	    seconds = 59;
 	    minutes -= 1;
+	  } else if (seconds < 10) {
+	    seconds = '0' + parseInt(seconds);
 	  }
 	
 	  var minutesStr = minutes.toString();
@@ -459,8 +461,10 @@
 	 pixel, and sets it's RGB channels to match";
 	Descriptions.fade = 'This was a simple fade achieved by incrementing and \
 	 decrementing pixels';
-	Descriptions.thresholdEasy = 'this is thresholdE';
-	Descriptions.threshold = 'this is thresdhold';
+	Descriptions.thresholdEasy = 'Threshold reassigns RGB values to a maximum or\
+	minimum based on their calculated luminosity.';
+	Descriptions.threshold = 'The threshold filter with a twist! \
+	Watch the threshold value change randomly.';
 	Descriptions.invert = "An Inverted image is the result of subtracting each \
 	 pixel's RGB values from their maximum";
 	Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \

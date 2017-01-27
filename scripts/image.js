@@ -7,7 +7,7 @@ let stage = 0;
 let selectedImage;
 export let currentDescription;
 let imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg',
-'cat.jpeg','microphone.jpeg', 'grass.jpeg', 'glasses.jpeg', 'horse.jpeg', 'tennis.jpeg'];
+'cat.jpeg','microphone.jpeg', 'grass.jpeg', 'glasses.jpg', 'horse.jpeg', 'tennis.jpeg'];
 export let answerString;
 
 selectImage();
@@ -72,7 +72,7 @@ function start(img) {
     }
   };
   resetImage();
-  changeImage(Filters.primePixels);
+  changeImage(currentFilter);
 }
 
 

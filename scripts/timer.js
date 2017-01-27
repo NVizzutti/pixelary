@@ -9,6 +9,8 @@ export const tickClock = function() {
   if (seconds < 0) {
     seconds = 59;
     minutes -= 1;
+  } else if (seconds < 10) {
+    seconds = `0${parseInt(seconds)}`;
   }
 
   let minutesStr = minutes.toString();
