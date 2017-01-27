@@ -43,4 +43,4 @@ Descriptions.invert = "An Inverted image is the result of subtracting each \
 Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \
 then adds a uniform RGB value to it';
 Descriptions.primePixels = "Here's an image with only prime RGB values. \
-Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13 etc. in memory.";
+Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13, 17 etc. in memory.";
