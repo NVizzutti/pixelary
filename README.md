@@ -10,7 +10,7 @@ The scripts were written in Vanilla JavaScript, only using jQuery for manipulati
 
 ![home](images/pixelary.png)
 
-###Asynchronous
+###Asynchronous Code
 
 Timed components and recursive calls made for an interesting development environment. Running multiple asynchronous operational loops at the same time made it a challenge to keep all shared variables accessible and reflecting the current state of the application.
 
