@@ -28,6 +28,12 @@ There was some cool things that were discovered, including the patterns that eme
 
 Iterating through an array of 1,920,000 elements is not cheap, and doing it multiple times per second begins to make O(n) time unsustainable. Some of the limitations of vanilla JS made handling complexity difficult, especially in having an image change dynamically. A possible trade off would be to store the new target image data in a hash, and lookup the value instead of re-calculating it.
 
+### Canvas Transformation
+
+To allow users to take a closer look at what is happening pixel by pixel if they so choose, I implemented a zoom feature where they can hover over an icon and view the canvas at 400% as it is being rendered. The canvas itself is being re-rendered constantly, so I utilized CSS instead of HTML5's transform method. The canvas remains in its container and is able to continue its process, while simultaneously a class is added which adjusts the CSS `zoom` property to allow for closer inspection.
+
+![home](images/pixelary3.png)
+
 ###Future Directions
 
 - [ ] Optimize filter operations and call stack
