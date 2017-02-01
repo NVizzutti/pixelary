@@ -59,8 +59,15 @@ h1 {
 canvas {
   width: 800px;
   height: 600px;
+  -moz-transition: all 0.8s;
+  -webkit-transition: all 0.8s;
+  transition: all 0.8s;
+}
+
+#canvas-wrapper {
   border: 3px solid white;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 input {
@@ -79,17 +86,40 @@ button {
   background-color: rgb(161, 0, 94);
   border-radius: 5px;
   margin: 5px;
+  margin-bottom: 10px;
   height: 50px;
   width: 250px;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+}
+
 .links {
   border-radius: 7px;
-  margin: 7px;
+  margin-top: 10px;
+  margin-right: 15px;
   height: 60px;
   width: auto;
 }
 
 .links:hover {
-  background-color: white;
+  height: 65px;
+}
+
+#zoom {
+  height: 50px;
+  width: auto;
+  margin: 10px;
+}
+
+.zoomed {
+  -moz-transform: scale(4);
+  -webkit-transform: scale(4);
+  transform: scale(4);
 }

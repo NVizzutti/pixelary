@@ -455,6 +455,12 @@
 	      displayMessage();
 	    }
 	  });
+	
+	  $("#zoom").hover(function () {
+	    $('canvas').addClass("zoomed");
+	  }, function () {
+	    $('canvas').removeClass("zoomed");
+	  });
 	});
 	
 	function displayMessage() {
