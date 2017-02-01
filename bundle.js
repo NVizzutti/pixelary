@@ -100,7 +100,6 @@
 	
 	$(document).ready(function () {
 	  $('#stop').click(function () {
-	    console.log('h');
 	    window.running = false;
 	    selectImage();
 	  });
@@ -158,12 +157,19 @@
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
+	  var fader = void 0;
 	  guess = guess.toLowerCase();
+	  var hint = answerString[Math.floor(Math.random() * answerString.length)];
 	  if (guess.includes(answerString)) {
 	    window.running = false;
 	    selectImage();
 	    (0, _timer.resetTimer)();
 	    return true;
+	  } else {
+	    clearTimeout(fader);
+	    $('#message').text('Not quite!').fadeTo('slow', 1);
+	    $('#sub-message').text('Hint: there is a \'' + hint + '\' in the word.').fadeTo('slow', 1);
+	    fader = setTimeout(_input.clearMessage, 1500);
 	  }
 	  return false;
 	};
