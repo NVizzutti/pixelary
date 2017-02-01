@@ -77,7 +77,7 @@
 	var stage = 0;
 	var selectedImage = void 0;
 	var currentDescription = exports.currentDescription = void 0;
-	var imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg', 'glasses.jpg', 'horse.jpeg', 'tennis.jpeg'];
+	var imageFile = ['flower.jpeg', 'strawberry.jpeg', 'eagle.jpeg', 'cat.jpeg', 'microphone.jpeg', 'grass.jpeg', 'glasses.jpg', 'horse.jpeg', 'ball.jpeg'];
 	var answerString = exports.answerString = void 0;
 	
 	selectImage();
@@ -85,7 +85,7 @@
 	function selectImage() {
 	  image = new Image();
 	  selectedImage = imageFile[stage];
-	  stage = stage >= imageFile.length ? 0 : stage;
+	  stage = stage >= imageFile.length - 1 ? 0 : stage;
 	  exports.answerString = answerString = selectedImage.split('.')[0];
 	  image.src = 'images/' + selectedImage;
 	  stage++;
@@ -190,6 +190,7 @@
 	var _image = __webpack_require__(1);
 	
 	var timeString = void 0;
+	var tickerTimeout = void 0;
 	
 	var tickClock = exports.tickClock = function tickClock() {
 	  timeString = $('#clock').text();
@@ -207,7 +208,7 @@
 	  var newString = minutesStr + ':' + zero + secondsStr;
 	  $('#clock').text(newString);
 	  if ((minutes > 0 || seconds > 0) && window.running) {
-	    setTimeout(tickClock, 1000);
+	    tickerTimeout = setTimeout(tickClock, 1000);
 	  } else if (minutes <= 0 && seconds <= 0) {
 	    $('#message').text('Answer was ' + _image.answerString).fadeTo('slow', 1);
 	    $('#sub-message').text('Press Any Key To Continue').fadeTo('slow', 1);
@@ -217,6 +218,7 @@
 	};
 	
 	var resetTimer = exports.resetTimer = function resetTimer() {
+	  clearTimeout(tickerTimeout);
 	  $('#clock').text('1:00');
 	};
 
@@ -229,7 +231,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.primePixels = exports.offsetPattern = exports.sepiaTone = exports.invert = exports.grayScale = exports.randomPixels = exports.thresholdEasy = exports.threshold = exports.fade = undefined;
+	exports.primePixels = exports.offsetPattern = exports.inverseThreshold = exports.sepiaTone = exports.invert = exports.grayScale = exports.randomPixels = exports.thresholdEasy = exports.threshold = exports.fade = undefined;
 	
 	var _isPrime = __webpack_require__(4);
 	
@@ -323,11 +325,33 @@
 	
 	var sepiaTone = exports.sepiaTone = function sepiaTone(current, original) {
 	  for (var i = 0; i < original.length; i += 4) {
-	    var randIdx = getRandomIndex(original);
-	    var gray = 0.3 * original[randIdx] + 0.6 * original[randIdx + 1] + 0.11 * original[randIdx + 2];
-	    current[randIdx] < original[randIdx] + 125 ? current[randIdx]++ : current[randIdx]--;
-	    current[randIdx + 1] < original[randIdx + 1] + 50 ? current[randIdx + 1]++ : current[randIdx + 1]--;
-	    current[randIdx + 2] < original[randIdx + 2] ? current[randIdx + 2]++ : current[randIdx + 2]--;
+	    // let randIdx = getRandomIndex(original);
+	    var gray = 0.3 * original[i] + 0.6 * original[i + 1] + 0.11 * original[i + 2];
+	    var black = original[i] + original[i + 1] + original[i + 2];
+	    if (black > 50) {
+	      current[i] < gray + 150 ? current[i]++ : current[i]--;
+	      current[i + 1] < gray + 50 ? current[i + 1]++ : current[i + 1]--;
+	      current[i + 2] < gray ? current[i + 2]++ : current[i + 2]--;
+	    }
+	  }
+	};
+	
+	var inverseThreshold = exports.inverseThreshold = function inverseThreshold(current, original) {
+	  var inverse = Math.floor(Math.random() * 90) + 110;
+	  for (var i = 0; i < original.length; i += 4) {
+	    current[i] = original[i];
+	    current[i + 1] = original[i + 1];
+	    current[i + 2] = original[i + 2];
+	    current[i + 3] = original[i + 3];
+	  }
+	  for (var j = 0; j < original.length; j += 4) {
+	    var black = current[j] + current[j + 1] + current[j + 2];
+	    if (black > inverse) {
+	      current[j] = original[j];
+	      current[j + 1] = original[j + 1];
+	      current[j + 2] = original[j + 2];
+	      current[j + 3] = original[j + 3] === 0 ? 1 : 1;
+	    }
 	  }
 	};
 	
@@ -501,6 +525,8 @@
 	then adds a uniform RGB value to it';
 	Descriptions.primePixels = "Here's an image with only prime RGB values. \
 	Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13, 17 etc. in memory.";
+	Descriptions.inverseThreshold = "I just made this one for fun. It detects pixel luminosity at changing \
+	threshold and fills in the inverse, leaving the remaining pixels black or transparent.";
 
 /***/ }
 /******/ ]);
