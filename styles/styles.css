@@ -53,8 +53,9 @@ h1 {
   font-size: 28px;
 }
 #description {
-  width: 550px;
+  width: auto;
   padding: 10px;
+  border-radius: 10px;
   background-color: black;
   font-size: 27px;
 }
@@ -72,6 +73,7 @@ canvas {
   border: 3px solid white;
   border-radius: 8px;
   overflow: hidden;
+  background: rgba(0, 0, 0, 0.36);
 }
 
 input {
