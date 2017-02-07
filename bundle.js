@@ -494,6 +494,10 @@
 	  $('.modal-btn').click(function () {
 	    $('#modal').css({ "display": "block" });
 	  });
+	
+	  $('#close-modal').click(function () {
+	    $('#modal').css({ "display": "none" });
+	  });
 	});
 	
 	function displayMessage() {

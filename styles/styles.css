@@ -131,26 +131,67 @@ button:hover {
 
 #modal {
     display: none;
-    position: absolute;;
-    z-index: 1;
-    left: 50%;
-    right: -50%;
-    width: 25%;
-    height: 25%;
-    background-color: rgba(0,0,0,0.4);
+    position: fixed;
+    padding: 5px;
+    z-index: 20;
+    top: 25%;
+    width: 60%;
+    height: 65%;
+    background-color: rgb(161, 0, 94);
+    border-radius: 5px;
 }
 
 #modal-content {
+    position: relative;
+    top: -1%;
     color: black;
-    width: 80%;
-    margin: 15% auto;
-    padding: 20px;
+    width: 90%;
+    height: 83%;
+    margin: 0 auto;
+    padding: 10px;
     background-color: #fefefe;
+    border-radius: 4px;
     border: 1px solid #888;
+    overflow-y: scroll;
+}
+
+#modal-content h1 {
+  font-family: 'Quicksand', sans-serif;
+  margin-bottom: 0;
+}
+
+#modal-content p {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 25px;
 }
 
 #open-modal {
+  cursor: pointer;
   text-align: center;
   width: 500px;
   padding-bottom: 0;
+}
+
+#close-modal {
+  cursor: pointer;
+  margin: 5px;
+  font-size: 40px;
+  font-family: sans-serif;
+}
+
+#modal ::-webkit-scrollbar {
+    width: 20px;
+}
+
+#modal ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+    border-radius: 20px;
+}
+
+#modal ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    color: rgb(255, 0, 149);
+    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+    background-color: rgba(243, 2, 158, 0.42);
 }

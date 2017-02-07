@@ -4,6 +4,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Codystar|VT323" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Quicksand" rel="stylesheet">
   <link rel="stylesheet" href="./styles/styles.css"charset="utf-8">
   <script src='./bundle.js' ></script>
     <meta charset="utf-8">
@@ -20,12 +21,46 @@
     <h3 id='sub-message'>Guess the Image As It's Reveale</h3>
   </div>
   <div id="modal">
+    <span align='right' id="close-modal">&times;</span>
     <div id="modal-content">
-      <span class="close">&times;</span>
-      <p>MOdal COntent In the Modal</p>
-      <p>MOdal COntent In the Modal</p>
-      <p>MOdal COntent In the Modal</p>
-      <p>MOdal COntent In the Modal</p>
+      <h1>Prime Pixels</h1>
+      <p>
+        Here's an image with only prime RGB values.
+        Look at all that green! That's because in
+        HTML5 green corresponds to 1, 5, 9, 13, 17 etc. in memory.
+      </p>
+      <h1>Offset Pattern</h1>
+      <p>
+        Adjusting pixel luminosity based on distance from
+        a point on the canvas gives you a circular pattern.
+        You can see where the reference
+        points reset.
+      </p>
+      <h1>Pixel Randomizer</h1>
+      <p>
+        This pixel randomizer just selects a random pixel
+        and sets it's correct values, revealing the image.
+      </p>
+      <h1>Grayscale Filter</h1>
+      <p>
+        Grayscale conversion finds the luminosity of each
+         pixel, and sets it's RGB channels to match
+      </p>
+      <h1>Threshold Filter</h1>
+      <p>
+        Threshold reassigns RGB values to a maximum or
+        minimum based on their calculated luminosity
+      </p>
+      <h1>Inverted Image</h1>
+      <p>
+        "An Inverted image is the result of subtracting each
+         pixel's RGB values from their maximum"
+      </p>
+      <h1>Sepia Filter</h1>
+      <p>
+        The sepia filter converts each pixel to grayscale,
+        then adds a uniform RGB value to it
+      </p>
     </div>
   </div>
   <div id='canvas-wrapper'>
