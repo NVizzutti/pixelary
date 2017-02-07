@@ -490,6 +490,10 @@
 	  }, function () {
 	    $('canvas').removeClass("zoomed");
 	  });
+	
+	  $('.modal-btn').click(function () {
+	    $('#modal').css({ "display": "block" });
+	  });
 	});
 	
 	function displayMessage() {
