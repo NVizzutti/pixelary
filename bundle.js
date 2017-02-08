@@ -153,7 +153,7 @@
 	    }
 	  };
 	  resetImage();
-	  changeImage(Filters.offsetPattern);
+	  changeImage(currentFilter);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
