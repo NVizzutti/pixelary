@@ -153,7 +153,7 @@
 	    }
 	  };
 	  resetImage();
-	  changeImage(currentFilter);
+	  changeImage(Filters.offsetPattern);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -325,7 +325,6 @@
 	
 	var sepiaTone = exports.sepiaTone = function sepiaTone(current, original) {
 	  for (var i = 0; i < original.length; i += 4) {
-	    // let randIdx = getRandomIndex(original);
 	    var gray = 0.3 * original[i] + 0.6 * original[i + 1] + 0.11 * original[i + 2];
 	    var black = original[i] + original[i + 1] + original[i + 2];
 	    if (black > 50) {
@@ -362,7 +361,7 @@
 	      var offsetX = i - 200;
 	      var offsetY = j - 200;
 	      var offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
-	      var result = Math.sin(offset / 8);
+	      var result = Math.sin(offset / 600);
 	      current[idx] += (original[idx] - result * original[idx]) * 0.05;
 	      current[idx += 1] += (original[idx] - result * original[idx + 1]) * 0.1;
 	      current[idx += 1] += (original[idx] - result * original[idx + 2]) * 0.1;
@@ -491,12 +490,30 @@
 	  }, function () {
 	    $('canvas').removeClass("zoomed");
 	  });
+	
+	  $('.modal-btn').click(function () {
+	    $('#modal').css({ "display": "block" });
+	  });
+	
+	  $('#close-modal').click(function () {
+	    $('#modal').css({ "display": "none" });
+	  });
+	
+	  $('body').click(function (e) {
+	    if (e.target.id == "modal" || e.target.id == "open-modal") {
+	      return;
+	    } else if ($(e.target).closest('#modal').length) {
+	      return;
+	    } else if ($("#modal").css("display") === "block") {
+	      $('#modal').css({ "display": "none" });
+	    }
+	  });
 	});
 	
 	function displayMessage() {
 	  $('#message').text('Correct!').fadeTo('slow', 1);
 	  $('#sub-message').text('Press Any Key to Continue').fadeTo('slow', 1);
-	  $('#description').text(_image.currentDescription).fadeTo('slow', 1);
+	  $('#description').html(_image.currentDescription).fadeTo('slow', 1);
 	}
 	
 	var clearMessage = exports.clearMessage = function clearMessage() {
@@ -506,27 +523,16 @@
 	};
 	
 	var Descriptions = exports.Descriptions = {};
-	Descriptions.offsetPattern = "Adjusting pixel luminosity based on distance from \
-	a point on the canvas gives you a circular pattern. You can see where the reference \
-	points reset.";
-	Descriptions.randomPixels = "This pixel randomizer just selects a random pixel \
-	and sets it's correct values, revealing the image.";
-	Descriptions.grayScale = "Grayscale conversion finds the luminosity of each \
-	 pixel, and sets it's RGB channels to match";
-	Descriptions.fade = 'This was a simple fade achieved by incrementing and \
-	 decrementing pixels';
-	Descriptions.thresholdEasy = 'Threshold reassigns RGB values to a maximum or\
-	minimum based on their calculated luminosity.';
-	Descriptions.threshold = 'The threshold filter with a twist! \
-	Watch the threshold value change randomly.';
-	Descriptions.invert = "An Inverted image is the result of subtracting each \
-	 pixel's RGB values from their maximum";
-	Descriptions.sepiaTone = 'The sepia filter converts each pixel to grayscale, \
-	then adds a uniform RGB value to it';
-	Descriptions.primePixels = "Here's an image with only prime RGB values. \
-	Look at all that green! That's because in HTML5 green corresponds to 1, 5, 9, 13, 17 etc. in memory.";
-	Descriptions.inverseThreshold = "I just made this one for fun. It detects pixel luminosity at changing \
-	threshold and fills in the inverse, leaving the remaining pixels black or transparent.";
+	Descriptions.offsetPattern = "<u>EFFECT:</u> Offset Pattern | Zoom for closer look";
+	Descriptions.randomPixels = "<u>EFFECT:</u> Pixel Randomizer | Mousover Zoom to inspect";
+	Descriptions.grayScale = "<u>FILTER:</u> Gray Scale | Take a closer look with Zoom";
+	Descriptions.fade = "<u>EFFECT:</u> Fade | Zoom tool to inspect";
+	Descriptions.thresholdEasy = '<u>FILTER:</u> Threshold | Zoom for closer look';
+	Descriptions.threshold = '<u>EFFECT:</u> Changing Threshold | Zoom tool to inspect';
+	Descriptions.invert = "<u>FILTER:</u> Invert | Mouseover Zoom tool to inspect";
+	Descriptions.sepiaTone = '<u>FILTER:</u> Sepia Tone | Look closer with Zoom';
+	Descriptions.primePixels = "<u>FILTER:</u> Prime Values | Zoom in to inspect";
+	Descriptions.inverseThreshold = "<u>FILTER:</u> Reverse Threshold | Enhance view with Zoom";
 
 /***/ }
 /******/ ]);

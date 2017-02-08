@@ -4,6 +4,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Codystar|VT323" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Quicksand" rel="stylesheet">
   <link rel="stylesheet" href="./styles/styles.css"charset="utf-8">
   <script src='./bundle.js' ></script>
     <meta charset="utf-8">
@@ -16,15 +17,69 @@
     </div>
     <div id='messages'>
     <h2 id='message'>Press Any Key To Begin</h2>
-    <p id='description'>Try to guess the image subject as the algorithm is run.
-      Mouse over the zoom icon to take a closer look at how the pixels are changing.
-    </p>
-    <h3 id='sub-message'>Guess the Image, Learn about the Process!</h3>
+    <p id='description'></p>
+    <h3 id='sub-message'>Guess the Image As It's Reveale</h3>
+  </div>
+  <div id="modal">
+    <span align='right' id="close-modal">&times;</span>
+    <div id="modal-content">
+      <h1>Prime Pixels</h1>
+      <p>
+      <i>HTML5's</i> ImageData splits pixels into RGBA channels, consisting of
+        four corresponding integers between 0 and 255 stored in an array. When only
+        prime indicies are displayed, the image appears in all shades of
+        green. That's because green corresponds to indicies 1, 5, 9, 13, 17...
+        in the <i>ImageData</i> Array.
+      </p>
+      <h1>Offset Pattern</h1>
+      <p>
+        Each pixel's brightness is adjusted based on it's location on the canvas.
+        The general offset is calculated in radians, and the sine of the
+        offset divided by canvas width is used to recreate the pixel color with a new luminosity.
+        <i>(Math.sin(offset/600))</i>This results in a linear brightness effect oriented diagonally.
+      </p>
+      <h1>Pixel Randomizer</h1>
+      <p>
+        The pixel randomizer iterates over the <i>ImageData Array</i>, selecting
+        random pixels for insertion. This results in a dotting effect to fill in
+        the image.
+      </p>
+      <h1>Grayscale Filter</h1>
+      <p>
+        In Image Processing <i>luminosity</i> is the value given to represemt RGB on
+        the gray scale. It is used for much more than converting images to Black and White,
+        but to achieve grayscale you can calculate a pixel's luminosity using some variation
+        of the formula: <i>(0.3 * Red) + (0.6 * Green) + (0.1 * Blue)</i>, and assigning it to
+        each channel(Except Alpha in this case).
+      </p>
+      <h1>Threshold Filter</h1>
+      <p>
+        Another example use of luminosity, but instead of aiming for a gray value, we set
+        all RGB channels to 255 or 0. This is dependant upon the <i>threshold integer</i>, which you have
+        likely seen in image processing software. This results in pixels being entirely black or
+        entirely white, and makes for some great effects and is useful in vector creation.
+      </p>
+      <h1>Inverted Image</h1>
+      <p>
+        To invert the colors of an image, RGB values are subtracted from their
+        maximum(255). This produces the inverse value:
+        <i>255(100%) - 178(70%) = 77(%30)</i>
+      </p>
+      <h1>Sepia Filter</h1>
+      <p>
+        Sepia Tone adds a bit of color to a grayscale image. For processing
+        a colored image, it is converted to grayscale, then the Red and Green
+        channels are added in addition to the luminosity value. These are adjustable,
+        but something similar to:<br>
+        <i>Red = (0.3 * R) + 150, Green = (0.6 * G) + 50, Blue = (0.1 * B)</i><br/>
+      </p>
+    </div>
   </div>
   <div id='canvas-wrapper'>
   <h2 id='clock'>1:00</h2>
   <canvas id="img-canvas" width="800" height="500"></canvas>
   </div>
+  <h2 id='open-modal' class="modal-btn">Learn More About The Process</h2>
   <input type='text' placeholder='Press Enter to Submit' id='guess'></input>
   <div id='controls'>
   <button id='stop'>Freeze</button>
