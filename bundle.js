@@ -498,6 +498,16 @@
 	  $('#close-modal').click(function () {
 	    $('#modal').css({ "display": "none" });
 	  });
+	
+	  $('body').click(function (e) {
+	    if (e.target.id == "modal" || e.target.id == "open-modal") {
+	      return;
+	    } else if ($(e.target).closest('#modal').length) {
+	      return;
+	    } else if ($("#modal").css("display") === "block") {
+	      $('#modal').css({ "display": "none" });
+	    }
+	  });
 	});
 	
 	function displayMessage() {
