@@ -153,7 +153,7 @@
 	    }
 	  };
 	  resetImage();
-	  changeImage(currentFilter);
+	  changeImage(Filters.offsetPattern);
 	}
 	
 	var checkGuess = exports.checkGuess = function checkGuess(guess) {
@@ -361,7 +361,7 @@
 	      var offsetX = i - 200;
 	      var offsetY = j - 200;
 	      var offset = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
-	      var result = Math.sin(offset / 8);
+	      var result = Math.sin(offset / 600);
 	      current[idx] += (original[idx] - result * original[idx]) * 0.05;
 	      current[idx += 1] += (original[idx] - result * original[idx + 1]) * 0.1;
 	      current[idx += 1] += (original[idx] - result * original[idx + 2]) * 0.1;

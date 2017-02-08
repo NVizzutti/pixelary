@@ -25,41 +25,53 @@
     <div id="modal-content">
       <h1>Prime Pixels</h1>
       <p>
-        Here's an image with only prime RGB values.
-        Look at all that green! That's because in
-        HTML5 green corresponds to 1, 5, 9, 13, 17 etc. in memory.
+      <i>HTML5's</i> ImageData splits pixels into RGBA channels, consisting of
+        four corresponding integers between 0 and 255 stored in an array. When only
+        prime indicies are displayed, the image appears in all shades of
+        green. That's because green corresponds to indicies 1, 5, 9, 13, 17...
+        in the <i>ImageData</i> Array.
       </p>
       <h1>Offset Pattern</h1>
       <p>
-        Adjusting pixel luminosity based on distance from
-        a point on the canvas gives you a circular pattern.
-        You can see where the reference
-        points reset.
+        Each pixel's brightness is adjusted based on it's location on the canvas.
+        The general offset is calculated in radians, and the sine of the
+        offset divided by canvas width is used to recreate the pixel color with a new luminosity.
+        <i>(Math.sin(offset/600))</i>This results in a linear brightness effect oriented diagonally.
       </p>
       <h1>Pixel Randomizer</h1>
       <p>
-        This pixel randomizer just selects a random pixel
-        and sets it's correct values, revealing the image.
+        The pixel randomizer iterates over the <i>ImageData Array</i>, selecting
+        random pixels for insertion. This results in a dotting effect to fill in
+        the image.
       </p>
       <h1>Grayscale Filter</h1>
       <p>
-        Grayscale conversion finds the luminosity of each
-         pixel, and sets it's RGB channels to match
+        In Image Processing <i>luminosity</i> is the value given to represemt RGB on
+        the gray scale. It is used for much more than converting images to Black and White,
+        but to achieve grayscale you can calculate a pixel's luminosity using some variation
+        of the formula: <i>(0.3 * Red) + (0.6 * Green) + (0.1 * Blue)</i>, and assigning it to
+        each channel(Except Alpha in this case).
       </p>
       <h1>Threshold Filter</h1>
       <p>
-        Threshold reassigns RGB values to a maximum or
-        minimum based on their calculated luminosity
+        Another example use of luminosity, but instead of aiming for a gray value, we set
+        all RGB channels to 255 or 0. This is dependant upon the <i>threshold integer</i>, which you have
+        likely seen in image processing software. This results in pixels being entirely black or
+        entirely white, and makes for some great effects and is useful in vector creation.
       </p>
       <h1>Inverted Image</h1>
       <p>
-        "An Inverted image is the result of subtracting each
-         pixel's RGB values from their maximum"
+        To invert the colors of an image, RGB values are subtracted from their
+        maximum(255). This produces the inverse value:
+        <i>255(100%) - 178(70%) = 77(%30)</i>
       </p>
       <h1>Sepia Filter</h1>
       <p>
-        The sepia filter converts each pixel to grayscale,
-        then adds a uniform RGB value to it
+        Sepia Tone adds a bit of color to a grayscale image. For processing
+        a colored image, it is converted to grayscale, then the Red and Green
+        channels are added in addition to the luminosity value. These are adjustable,
+        but something similar to:<br>
+        <i>Red = (0.3 * R) + 150, Green = (0.6 * G) + 50, Blue = (0.1 * B)</i><br/>
       </p>
     </div>
   </div>
@@ -67,7 +79,7 @@
   <h2 id='clock'>1:00</h2>
   <canvas id="img-canvas" width="800" height="500"></canvas>
   </div>
-  <h2 id='open-modal' class="modal-btn">Learn More</h2>
+  <h2 id='open-modal' class="modal-btn">Learn More About The Process</h2>
   <input type='text' placeholder='Press Enter to Submit' id='guess'></input>
   <div id='controls'>
   <button id='stop'>Freeze</button>

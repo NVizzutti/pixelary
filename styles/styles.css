@@ -173,7 +173,12 @@ button:hover {
   width: 500px;
   padding-bottom: 0;
   margin: 0;
+  padding-top: 10px;
   margin-top: 5px;
+}
+
+#open-modal:hover {
+  color: #9e015d;
 }
 
 #close-modal {
