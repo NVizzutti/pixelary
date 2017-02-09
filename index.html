@@ -18,7 +18,7 @@
     <div id='messages'>
     <h2 id='message'>Press Any Key To Begin</h2>
     <p id='description'></p>
-    <h3 id='sub-message'>Guess the Image As It's Reveale</h3>
+    <h3 id='sub-message'>Guess the Image As It's Revealed</h3>
   </div>
   <div id="modal">
     <span align='right' id="close-modal">&times;</span>
@@ -29,13 +29,13 @@
         four corresponding integers between 0 and 255 stored in an array. When only
         prime indicies are displayed, the image appears in all shades of
         green. That's because green corresponds to indicies 1, 5, 9, 13, 17...
-        in the <i>ImageData</i> Array.
+        in the <i>ImageData</i> Array. Pretty cool, huh?
       </p>
       <h1>Offset Pattern</h1>
       <p>
         Each pixel's brightness is adjusted based on it's location on the canvas.
         The general offset is calculated in radians, and the sine of the
-        offset divided by canvas width is used to recreate the pixel color with a new luminosity.
+        offset divided by the canvas width is used to recreate the pixel color with a new luminosity.
         <i>(Math.sin(offset/600))</i>This results in a linear brightness effect oriented diagonally.
       </p>
       <h1>Pixel Randomizer</h1>
