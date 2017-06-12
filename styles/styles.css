@@ -14,6 +14,10 @@ h1 {
   font-family: 'Codystar', cursive;
 }
 
+em {
+  font-style: italic;
+}
+
 #title {
   margin-top: 0;
   font-size: 70px;
